@@ -1,0 +1,92 @@
+pre>.remark-code>.remark-code-line{
+  font-family:'Source Code Pro', 'Lucida Console', Monaco, monospace;
+  font-size:10pt;
+}
+
+code.r.hljs.remark-code {
+    background:	lightgray; 
+    color: black;
+}
+
+.r.hljs.remark-code>.remark-code-line {
+    font-family:'Source Code Pro','Lucida Console', Monaco, monospace;
+    font-size:10pt;
+}
+
+
+.inverse {
+  bbackground-color: #293462;
+  ccolor: #f7be16;
+  font-family: '';
+}
+
+.left-code {
+ color: #777;
+ width: 55%;
+ height: 92%;
+ float: left;
+}
+
+.right-output {
+ width: 35%;
+ height: 100%;
+ float: right;
+}
+
+
+.left-plot-code {
+ width: 50%;
+ height: 92%;
+ float: left;
+}
+
+.right-plot-output {
+ width: 45%;
+ height: 100%;
+ float: right;
+}
+
+.plot-callout {
+  height: 225px;
+  width: 450px;
+  bottom: 5%;
+  right: 5%;
+  position: absolute;
+  padding: 0px;
+  z-index: 100;
+}
+
+.plot-callout img {
+  width: 100%;
+  border: 4px solid #23373B;
+}
+
+.bg-primary {
+  background-color:#007bff;
+}
+
+.bg-success{
+  background-color:#28a745;
+}
+
+/*background: #e1fec;*/
+
+pre   {
+   background: #F5F5F5;
+   color: black;
+  
+}
+
+.remark-slide-content h2 {
+  margin: 0px 0px 10px 0px;
+}
+
+ul li {
+    font-size: 24px;
+    margin-bottom:10px;
+}
+
+
+.remark-code-line-highlighted {
+    background: #fafec;
+}
