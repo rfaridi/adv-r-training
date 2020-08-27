@@ -38,5 +38,5 @@ flights %>%
 
 `r chunk_reveal("relocate2")`
 
-
+---
 
