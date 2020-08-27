@@ -5,7 +5,7 @@ output:
     lib_dir: libs
     css: [default, hygge, ninjutsu,"myprez.css"]
     nature:
-      ratio: 16:10
+      ratio: '16:10'
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
@@ -18,184 +18,18 @@ opts_chunk$set(message=F,
 		   comment=NA)
 ```
 
-
-Let's load the library
-
-
-```{r}
-library(dplyr)
+```{r, include=F}
+library(tidyverse)
+library(nycflights13)
 library(flipbookr)
-library(slider)
-library(tidyr)
 ```
 
 
-
-Let's have an example data set 
-
-
-```{r}
-
-df <- tibble(
-  grp = rep(1:2, each = 5), 
-  x = c(rnorm(5, -0.25, 1), rnorm(5, 0, 1.5)),
-  y = c(rnorm(5, 0.25, 1), rnorm(5, 0, 0.5)),
-)
-
-
+```{r child='./dplyr-adv-features-p1-relocate.rmd', eval=T}
 ```
 
----
-
-class: inverse,middle,center 
- 
-# `relocate()`
-
----
-
-```{r relocate, include = FALSE}
-star <- starwars%>% 
-    select(name:skin_color)
-star %>% 
-    relocate(skin_color)  %>% 
-    head(2)
-star %>% 
-    relocate(skin_color, .after=height) %>% 
-    head(2)
-star %>% 
-    relocate(skin_color, .before=hair_color) %>% 
-    head(2)
-star %>% 
-    relocate(height, .after =last_col()) %>% 
-    head(2)
-star %>% 
-    relocate(is.numeric, .after =last_col()) %>% 
-    head(2)
-star %>% 
-    relocate(is.numeric, .after =is.character) %>% 
-    head(2)
+```{r child='./dplyr-adv-features-p2-across.rmd', eval=T}
 ```
-
-`r chunk_reveal("relocate")`
-
----
-
-class:inverse,center,middle
-
-# `across()`
-
----
-
-```{r across, include = FALSE}
-starwars %>% 
-    summarize_if(is.character, n_distinct)
-starwars %>% 
-    summarize(across(where(is.character), n_distinct))
-starwars %>% 
-    summarize_at(vars(sex,gender,homeworld), n_distinct)
-starwars %>% 
-    group_by(species) %>% 
-    filter(n() > 1) %>% 
-    summarize(across(c(sex,gender,homeworld), n_distinct))
-```
-
-`r chunk_reveal("across",split=50)`
-
----
-
-```{r across2, include = FALSE}
-
-starwars %>% 
-    group_by(species) %>% 
-    filter(n() > 1) %>% 
-    summarize(across(where(is.numeric),mean))
-starwars %>% 
-    group_by(species) %>% 
-    filter(n() > 1) %>% 
-    summarize_if(is.numeric,mean)
-```
-
-`r chunk_reveal("across2",split=50)`
-
----
-
-```{r across3, include = FALSE}
-
-mtcars %>% 
-    group_by(cyl) %>% 
-    summarise(range=range(mpg))
-mtcars %>% 
-    group_by(cyl) %>% 
-    summarise(range=range(mpg)) %>% 
-    mutate(name=rep(c("min","max"), length(unique(cyl)))) %>% 
-    pivot_wider(names_from=name, values_from=range)
-# alternative 
-
-mtcars %>% 
-    group_by(cyl) %>% 
-    summarise(min=min(mpg), max=max(mpg)) 
-# May the second one much easier
-# But useful in longer output 
-```
-
-`r chunk_reveal("across3",split=50)`
-
----
-
-```{r across4, include = FALSE}
-decile <- seq(0, 1, 0.1)
-mtcars %>% 
-  group_by(cyl) %>% 
-  summarise(deciles = quantile(mpg, decile)) %>% 
-  mutate(name = rep(paste0("dec_", decile), length(unique(cyl)))) %>% 
-  pivot_wider(names_from = name, values_from = deciles)
-```
-
-`r chunk_reveal("across4",display_type="code")`
-
-`r chunk_reveal("across4",display_type="output")`
-
----
-
-class: inverse,middle,center 
-
-# Row-wise
-
----
-
-
-Let's have a look at "rowwise" vignette
-
-```{r df, include=F}
-example <- tibble(
-  x = 1:4,
-  y = letters[1:4]
-)
-```
-
----
-
-
-```{r rowwise, include=F}
-example
-slide(example$x, ~.x)
-slide(example$x, ~.x,.before=1)
-slide(example$x, ~.x, .before=1,.after=1)
-slide(example, ~.x, .before=1,.after=1,.complete=TRUE)
-
-```
-
-`r chunk_reveal("rowwise")`
-
-
-
-
-
-
-
-
-
-
 
 
 

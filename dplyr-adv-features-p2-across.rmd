@@ -1,0 +1,106 @@
+class: inverse,center,middle
+
+# `across()`
+
+---
+
+```{r across, include = FALSE}
+flights %>% 
+    summarize_if(is.character, n_distinct)
+flights %>% 
+    summarize(across(where(is.character), n_distinct))
+flights %>% 
+    summarize_at(vars(tailnum, origin, carrier), n_distinct)
+flights %>% 
+    summarize(across(where(is.numeric) & ends_with("delay"), mean,na.rm=T))
+flights%>% 
+    group_by(origin) %>% 
+    filter(n() > 1) %>% 
+    summarize(across(c(tailnum, carrier), n_distinct))
+```
+
+`r chunk_reveal("across", widths=c(1.1,1))`
+
+---
+
+```{r across2, include = FALSE}
+
+flights %>% 
+    group_by(origin) %>% 
+    filter(n() > 1) %>% 
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+flights %>% 
+    group_by(origin) %>% 
+    filter(n() > 1) %>% 
+    summarize(across(c(arr_delay,dep_delay),mean,na.rm=T))
+
+flights %>% 
+    drop_na(c(arr_delay,dep_delay)) %>% 
+    group_by(origin) %>% 
+    filter(n() > 1) %>% 
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+flights %>% 
+    drop_na(c(arr_delay,dep_delay)) %>% 
+    group_by(origin) %>% 
+    filter(n() > 1) %>% 
+    summarize(across(c(arr_delay,dep_delay),mean,.names = "mean_{col}"))
+
+flights %>% 
+    drop_na(c(arr_delay,dep_delay)) %>% 
+    group_by(origin) %>% 
+    filter(n() > 1) %>% 
+    summarize(across(c(arr_delay,dep_delay),c(avg=mean,sdev=sd),.names = "{col}_{fn}"))
+
+flights %>% 
+    group_by(origin) %>% 
+    filter(n() > 1) %>% 
+    summarize(across(c(arr_delay,dep_delay),c(avg=~mean(.x,na.rm=T),sdev=~sd(.x,na.rm=T)),.names = "{col}_{fn}"))
+
+```
+
+`r chunk_reveal("across2",widths=c(1.1,1))`
+
+---
+
+```{r across3, include = FALSE}
+
+flights %>% 
+    drop_na(dep_delay) %>% 
+    group_by(origin) %>% 
+    summarise(range=range(dep_delay))
+flights %>% 
+    drop_na(dep_delay) %>% 
+    group_by(origin) %>% 
+    summarise(range=range(dep_delay)) %>% 
+    mutate(name=rep(c("min","max"), length(unique(origin)))) %>% 
+    pivot_wider(names_from=name, values_from=range)
+# alternative 
+
+flights %>% 
+    drop_na(dep_delay) %>% 
+    group_by(origin) %>% 
+    summarise(min=min(dep_delay), max=max(dep_delay)) 
+# May the second one much easier
+# But useful in longer output 
+```
+
+`r chunk_reveal("across3",widths=c(1.1,1))`
+
+---
+
+```{r across4, include = FALSE}
+decile <- seq(0, 1, 0.1)
+flights %>% 
+  drop_na(dep_delay) %>% 
+  group_by(origin) %>% 
+  summarise(deciles = quantile(dep_delay, decile)) %>% 
+  mutate(name = rep(paste0("dec_", decile), length(unique(origin)))) %>% 
+  pivot_wider(names_from = name, values_from = deciles)
+```
+
+`r chunk_reveal("across4",widths=c(1.1,1))`
+
+
+

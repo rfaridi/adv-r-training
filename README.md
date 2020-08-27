@@ -10,6 +10,7 @@ Welcome all to this Advanced R training course. This `github` repo has been crea
 
 [Source file of Presentation](./dplyr-adv-features.rmd)
 
+[R codes](./dplyr-adv-features.R)
 
 **Day 2: Iteration and Writing Functions**
 

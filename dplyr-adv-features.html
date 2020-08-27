@@ -21,1128 +21,12 @@ class: center, middle, inverse, title-slide
 
 
 
-Let's load the library
 
 
 
-```r
-library(dplyr)
-library(flipbookr)
-library(slider)
-library(tidyr)
-```
 
 
-
-Let's have an example data set 
-
-
-
-```r
-df &lt;- tibble(
-  grp = rep(1:2, each = 5), 
-  x = c(rnorm(5, -0.25, 1), rnorm(5, 0, 1.5)),
-  y = c(rnorm(5, 0.25, 1), rnorm(5, 0, 0.5)),
-)
-```
-
----
-
-class: inverse,middle,center 
- 
-# `relocate()`
-
----
-
-
-
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-*star &lt;- starwars
-```
-]]
-.column[.content[
-
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-star &lt;- starwars%&gt;%  
-*   select(name:skin_color)
-```
-]]
-.column[.content[
-
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-star &lt;- starwars%&gt;%  
-    select(name:skin_color)  
-*star
-```
-]]
-.column[.content[
-
-```
-# A tibble: 87 x 5
-   name               height  mass hair_color    skin_color 
-   &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;      
- 1 Luke Skywalker        172    77 blond         fair       
- 2 C-3PO                 167    75 &lt;NA&gt;          gold       
- 3 R2-D2                  96    32 &lt;NA&gt;          white, blue
- 4 Darth Vader           202   136 none          white      
- 5 Leia Organa           150    49 brown         light      
- 6 Owen Lars             178   120 brown, grey   light      
- 7 Beru Whitesun lars    165    75 brown         light      
- 8 R5-D4                  97    32 &lt;NA&gt;          white, red 
- 9 Biggs Darklighter     183    84 black         light      
-10 Obi-Wan Kenobi        182    77 auburn, white fair       
-# … with 77 more rows
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-star &lt;- starwars%&gt;%  
-    select(name:skin_color)  
-star %&gt;%  
-*   relocate(skin_color)
-```
-]]
-.column[.content[
-
-```
-# A tibble: 87 x 5
-   skin_color  name               height  mass hair_color   
-   &lt;chr&gt;       &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;        
- 1 fair        Luke Skywalker        172    77 blond        
- 2 gold        C-3PO                 167    75 &lt;NA&gt;         
- 3 white, blue R2-D2                  96    32 &lt;NA&gt;         
- 4 white       Darth Vader           202   136 none         
- 5 light       Leia Organa           150    49 brown        
- 6 light       Owen Lars             178   120 brown, grey  
- 7 light       Beru Whitesun lars    165    75 brown        
- 8 white, red  R5-D4                  97    32 &lt;NA&gt;         
- 9 light       Biggs Darklighter     183    84 black        
-10 fair        Obi-Wan Kenobi        182    77 auburn, white
-# … with 77 more rows
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-star &lt;- starwars%&gt;%  
-    select(name:skin_color)  
-star %&gt;%  
-    relocate(skin_color)  %&gt;%  
-*   head(2)
-```
-]]
-.column[.content[
-
-```
-# A tibble: 2 x 5
-  skin_color name           height  mass hair_color
-  &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
-1 fair       Luke Skywalker    172    77 blond     
-2 gold       C-3PO             167    75 &lt;NA&gt;      
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-star &lt;- starwars%&gt;%  
-    select(name:skin_color)  
-star %&gt;%  
-    relocate(skin_color)  %&gt;%  
-    head(2)  
-*star
-```
-]]
-.column[.content[
-
-```
-# A tibble: 2 x 5
-  skin_color name           height  mass hair_color
-  &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
-1 fair       Luke Skywalker    172    77 blond     
-2 gold       C-3PO             167    75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 87 x 5
-   name               height  mass hair_color    skin_color 
-   &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;      
- 1 Luke Skywalker        172    77 blond         fair       
- 2 C-3PO                 167    75 &lt;NA&gt;          gold       
- 3 R2-D2                  96    32 &lt;NA&gt;          white, blue
- 4 Darth Vader           202   136 none          white      
- 5 Leia Organa           150    49 brown         light      
- 6 Owen Lars             178   120 brown, grey   light      
- 7 Beru Whitesun lars    165    75 brown         light      
- 8 R5-D4                  97    32 &lt;NA&gt;          white, red 
- 9 Biggs Darklighter     183    84 black         light      
-10 Obi-Wan Kenobi        182    77 auburn, white fair       
-# … with 77 more rows
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-star &lt;- starwars%&gt;%  
-    select(name:skin_color)  
-star %&gt;%  
-    relocate(skin_color)  %&gt;%  
-    head(2)  
-star %&gt;%  
-*   relocate(skin_color, .after=height)
-```
-]]
-.column[.content[
-
-```
-# A tibble: 2 x 5
-  skin_color name           height  mass hair_color
-  &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
-1 fair       Luke Skywalker    172    77 blond     
-2 gold       C-3PO             167    75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 87 x 5
-   name               height skin_color   mass hair_color   
-   &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;        
- 1 Luke Skywalker        172 fair           77 blond        
- 2 C-3PO                 167 gold           75 &lt;NA&gt;         
- 3 R2-D2                  96 white, blue    32 &lt;NA&gt;         
- 4 Darth Vader           202 white         136 none         
- 5 Leia Organa           150 light          49 brown        
- 6 Owen Lars             178 light         120 brown, grey  
- 7 Beru Whitesun lars    165 light          75 brown        
- 8 R5-D4                  97 white, red     32 &lt;NA&gt;         
- 9 Biggs Darklighter     183 light          84 black        
-10 Obi-Wan Kenobi        182 fair           77 auburn, white
-# … with 77 more rows
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-star &lt;- starwars%&gt;%  
-    select(name:skin_color)  
-star %&gt;%  
-    relocate(skin_color)  %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .after=height) %&gt;%  
-*   head(2)
-```
-]]
-.column[.content[
-
-```
-# A tibble: 2 x 5
-  skin_color name           height  mass hair_color
-  &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
-1 fair       Luke Skywalker    172    77 blond     
-2 gold       C-3PO             167    75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height skin_color  mass hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;     
-1 Luke Skywalker    172 fair          77 blond     
-2 C-3PO             167 gold          75 &lt;NA&gt;      
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-star &lt;- starwars%&gt;%  
-    select(name:skin_color)  
-star %&gt;%  
-    relocate(skin_color)  %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .after=height) %&gt;%  
-    head(2)  
-*star
-```
-]]
-.column[.content[
-
-```
-# A tibble: 2 x 5
-  skin_color name           height  mass hair_color
-  &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
-1 fair       Luke Skywalker    172    77 blond     
-2 gold       C-3PO             167    75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height skin_color  mass hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;     
-1 Luke Skywalker    172 fair          77 blond     
-2 C-3PO             167 gold          75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 87 x 5
-   name               height  mass hair_color    skin_color 
-   &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;      
- 1 Luke Skywalker        172    77 blond         fair       
- 2 C-3PO                 167    75 &lt;NA&gt;          gold       
- 3 R2-D2                  96    32 &lt;NA&gt;          white, blue
- 4 Darth Vader           202   136 none          white      
- 5 Leia Organa           150    49 brown         light      
- 6 Owen Lars             178   120 brown, grey   light      
- 7 Beru Whitesun lars    165    75 brown         light      
- 8 R5-D4                  97    32 &lt;NA&gt;          white, red 
- 9 Biggs Darklighter     183    84 black         light      
-10 Obi-Wan Kenobi        182    77 auburn, white fair       
-# … with 77 more rows
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-star &lt;- starwars%&gt;%  
-    select(name:skin_color)  
-star %&gt;%  
-    relocate(skin_color)  %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .after=height) %&gt;%  
-    head(2)  
-star %&gt;%  
-*   relocate(skin_color, .before=hair_color)
-```
-]]
-.column[.content[
-
-```
-# A tibble: 2 x 5
-  skin_color name           height  mass hair_color
-  &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
-1 fair       Luke Skywalker    172    77 blond     
-2 gold       C-3PO             167    75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height skin_color  mass hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;     
-1 Luke Skywalker    172 fair          77 blond     
-2 C-3PO             167 gold          75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 87 x 5
-   name               height  mass skin_color  hair_color   
-   &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;        
- 1 Luke Skywalker        172    77 fair        blond        
- 2 C-3PO                 167    75 gold        &lt;NA&gt;         
- 3 R2-D2                  96    32 white, blue &lt;NA&gt;         
- 4 Darth Vader           202   136 white       none         
- 5 Leia Organa           150    49 light       brown        
- 6 Owen Lars             178   120 light       brown, grey  
- 7 Beru Whitesun lars    165    75 light       brown        
- 8 R5-D4                  97    32 white, red  &lt;NA&gt;         
- 9 Biggs Darklighter     183    84 light       black        
-10 Obi-Wan Kenobi        182    77 fair        auburn, white
-# … with 77 more rows
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-star &lt;- starwars%&gt;%  
-    select(name:skin_color)  
-star %&gt;%  
-    relocate(skin_color)  %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .after=height) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .before=hair_color) %&gt;%  
-*   head(2)
-```
-]]
-.column[.content[
-
-```
-# A tibble: 2 x 5
-  skin_color name           height  mass hair_color
-  &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
-1 fair       Luke Skywalker    172    77 blond     
-2 gold       C-3PO             167    75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height skin_color  mass hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;     
-1 Luke Skywalker    172 fair          77 blond     
-2 C-3PO             167 gold          75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height  mass skin_color hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;     
-1 Luke Skywalker    172    77 fair       blond     
-2 C-3PO             167    75 gold       &lt;NA&gt;      
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-star &lt;- starwars%&gt;%  
-    select(name:skin_color)  
-star %&gt;%  
-    relocate(skin_color)  %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .after=height) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .before=hair_color) %&gt;%  
-    head(2)  
-*star
-```
-]]
-.column[.content[
-
-```
-# A tibble: 2 x 5
-  skin_color name           height  mass hair_color
-  &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
-1 fair       Luke Skywalker    172    77 blond     
-2 gold       C-3PO             167    75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height skin_color  mass hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;     
-1 Luke Skywalker    172 fair          77 blond     
-2 C-3PO             167 gold          75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height  mass skin_color hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;     
-1 Luke Skywalker    172    77 fair       blond     
-2 C-3PO             167    75 gold       &lt;NA&gt;      
-```
-
-```
-# A tibble: 87 x 5
-   name               height  mass hair_color    skin_color 
-   &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;      
- 1 Luke Skywalker        172    77 blond         fair       
- 2 C-3PO                 167    75 &lt;NA&gt;          gold       
- 3 R2-D2                  96    32 &lt;NA&gt;          white, blue
- 4 Darth Vader           202   136 none          white      
- 5 Leia Organa           150    49 brown         light      
- 6 Owen Lars             178   120 brown, grey   light      
- 7 Beru Whitesun lars    165    75 brown         light      
- 8 R5-D4                  97    32 &lt;NA&gt;          white, red 
- 9 Biggs Darklighter     183    84 black         light      
-10 Obi-Wan Kenobi        182    77 auburn, white fair       
-# … with 77 more rows
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-star &lt;- starwars%&gt;%  
-    select(name:skin_color)  
-star %&gt;%  
-    relocate(skin_color)  %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .after=height) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .before=hair_color) %&gt;%  
-    head(2)  
-star %&gt;%  
-*   relocate(height, .after =last_col())
-```
-]]
-.column[.content[
-
-```
-# A tibble: 2 x 5
-  skin_color name           height  mass hair_color
-  &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
-1 fair       Luke Skywalker    172    77 blond     
-2 gold       C-3PO             167    75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height skin_color  mass hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;     
-1 Luke Skywalker    172 fair          77 blond     
-2 C-3PO             167 gold          75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height  mass skin_color hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;     
-1 Luke Skywalker    172    77 fair       blond     
-2 C-3PO             167    75 gold       &lt;NA&gt;      
-```
-
-```
-# A tibble: 87 x 5
-   name                mass hair_color    skin_color  height
-   &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;        &lt;int&gt;
- 1 Luke Skywalker        77 blond         fair           172
- 2 C-3PO                 75 &lt;NA&gt;          gold           167
- 3 R2-D2                 32 &lt;NA&gt;          white, blue     96
- 4 Darth Vader          136 none          white          202
- 5 Leia Organa           49 brown         light          150
- 6 Owen Lars            120 brown, grey   light          178
- 7 Beru Whitesun lars    75 brown         light          165
- 8 R5-D4                 32 &lt;NA&gt;          white, red      97
- 9 Biggs Darklighter     84 black         light          183
-10 Obi-Wan Kenobi        77 auburn, white fair           182
-# … with 77 more rows
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-star &lt;- starwars%&gt;%  
-    select(name:skin_color)  
-star %&gt;%  
-    relocate(skin_color)  %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .after=height) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .before=hair_color) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(height, .after =last_col()) %&gt;%  
-*   head(2)
-```
-]]
-.column[.content[
-
-```
-# A tibble: 2 x 5
-  skin_color name           height  mass hair_color
-  &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
-1 fair       Luke Skywalker    172    77 blond     
-2 gold       C-3PO             167    75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height skin_color  mass hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;     
-1 Luke Skywalker    172 fair          77 blond     
-2 C-3PO             167 gold          75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height  mass skin_color hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;     
-1 Luke Skywalker    172    77 fair       blond     
-2 C-3PO             167    75 gold       &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name            mass hair_color skin_color height
-  &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;       &lt;int&gt;
-1 Luke Skywalker    77 blond      fair          172
-2 C-3PO             75 &lt;NA&gt;       gold          167
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-star &lt;- starwars%&gt;%  
-    select(name:skin_color)  
-star %&gt;%  
-    relocate(skin_color)  %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .after=height) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .before=hair_color) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(height, .after =last_col()) %&gt;%  
-    head(2)  
-*star
-```
-]]
-.column[.content[
-
-```
-# A tibble: 2 x 5
-  skin_color name           height  mass hair_color
-  &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
-1 fair       Luke Skywalker    172    77 blond     
-2 gold       C-3PO             167    75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height skin_color  mass hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;     
-1 Luke Skywalker    172 fair          77 blond     
-2 C-3PO             167 gold          75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height  mass skin_color hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;     
-1 Luke Skywalker    172    77 fair       blond     
-2 C-3PO             167    75 gold       &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name            mass hair_color skin_color height
-  &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;       &lt;int&gt;
-1 Luke Skywalker    77 blond      fair          172
-2 C-3PO             75 &lt;NA&gt;       gold          167
-```
-
-```
-# A tibble: 87 x 5
-   name               height  mass hair_color    skin_color 
-   &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;      
- 1 Luke Skywalker        172    77 blond         fair       
- 2 C-3PO                 167    75 &lt;NA&gt;          gold       
- 3 R2-D2                  96    32 &lt;NA&gt;          white, blue
- 4 Darth Vader           202   136 none          white      
- 5 Leia Organa           150    49 brown         light      
- 6 Owen Lars             178   120 brown, grey   light      
- 7 Beru Whitesun lars    165    75 brown         light      
- 8 R5-D4                  97    32 &lt;NA&gt;          white, red 
- 9 Biggs Darklighter     183    84 black         light      
-10 Obi-Wan Kenobi        182    77 auburn, white fair       
-# … with 77 more rows
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-star &lt;- starwars%&gt;%  
-    select(name:skin_color)  
-star %&gt;%  
-    relocate(skin_color)  %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .after=height) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .before=hair_color) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(height, .after =last_col()) %&gt;%  
-    head(2)  
-star %&gt;%  
-*   relocate(is.numeric, .after =last_col())
-```
-]]
-.column[.content[
-
-```
-# A tibble: 2 x 5
-  skin_color name           height  mass hair_color
-  &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
-1 fair       Luke Skywalker    172    77 blond     
-2 gold       C-3PO             167    75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height skin_color  mass hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;     
-1 Luke Skywalker    172 fair          77 blond     
-2 C-3PO             167 gold          75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height  mass skin_color hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;     
-1 Luke Skywalker    172    77 fair       blond     
-2 C-3PO             167    75 gold       &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name            mass hair_color skin_color height
-  &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;       &lt;int&gt;
-1 Luke Skywalker    77 blond      fair          172
-2 C-3PO             75 &lt;NA&gt;       gold          167
-```
-
-```
-# A tibble: 87 x 5
-   name               hair_color    skin_color  height  mass
-   &lt;chr&gt;              &lt;chr&gt;         &lt;chr&gt;        &lt;int&gt; &lt;dbl&gt;
- 1 Luke Skywalker     blond         fair           172    77
- 2 C-3PO              &lt;NA&gt;          gold           167    75
- 3 R2-D2              &lt;NA&gt;          white, blue     96    32
- 4 Darth Vader        none          white          202   136
- 5 Leia Organa        brown         light          150    49
- 6 Owen Lars          brown, grey   light          178   120
- 7 Beru Whitesun lars brown         light          165    75
- 8 R5-D4              &lt;NA&gt;          white, red      97    32
- 9 Biggs Darklighter  black         light          183    84
-10 Obi-Wan Kenobi     auburn, white fair           182    77
-# … with 77 more rows
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-star &lt;- starwars%&gt;%  
-    select(name:skin_color)  
-star %&gt;%  
-    relocate(skin_color)  %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .after=height) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .before=hair_color) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(height, .after =last_col()) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(is.numeric, .after =last_col()) %&gt;%  
-*   head(2)
-```
-]]
-.column[.content[
-
-```
-# A tibble: 2 x 5
-  skin_color name           height  mass hair_color
-  &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
-1 fair       Luke Skywalker    172    77 blond     
-2 gold       C-3PO             167    75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height skin_color  mass hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;     
-1 Luke Skywalker    172 fair          77 blond     
-2 C-3PO             167 gold          75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height  mass skin_color hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;     
-1 Luke Skywalker    172    77 fair       blond     
-2 C-3PO             167    75 gold       &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name            mass hair_color skin_color height
-  &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;       &lt;int&gt;
-1 Luke Skywalker    77 blond      fair          172
-2 C-3PO             75 &lt;NA&gt;       gold          167
-```
-
-```
-# A tibble: 2 x 5
-  name           hair_color skin_color height  mass
-  &lt;chr&gt;          &lt;chr&gt;      &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;
-1 Luke Skywalker blond      fair          172    77
-2 C-3PO          &lt;NA&gt;       gold          167    75
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-star &lt;- starwars%&gt;%  
-    select(name:skin_color)  
-star %&gt;%  
-    relocate(skin_color)  %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .after=height) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .before=hair_color) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(height, .after =last_col()) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(is.numeric, .after =last_col()) %&gt;%  
-    head(2)  
-*star
-```
-]]
-.column[.content[
-
-```
-# A tibble: 2 x 5
-  skin_color name           height  mass hair_color
-  &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
-1 fair       Luke Skywalker    172    77 blond     
-2 gold       C-3PO             167    75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height skin_color  mass hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;     
-1 Luke Skywalker    172 fair          77 blond     
-2 C-3PO             167 gold          75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height  mass skin_color hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;     
-1 Luke Skywalker    172    77 fair       blond     
-2 C-3PO             167    75 gold       &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name            mass hair_color skin_color height
-  &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;       &lt;int&gt;
-1 Luke Skywalker    77 blond      fair          172
-2 C-3PO             75 &lt;NA&gt;       gold          167
-```
-
-```
-# A tibble: 2 x 5
-  name           hair_color skin_color height  mass
-  &lt;chr&gt;          &lt;chr&gt;      &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;
-1 Luke Skywalker blond      fair          172    77
-2 C-3PO          &lt;NA&gt;       gold          167    75
-```
-
-```
-# A tibble: 87 x 5
-   name               height  mass hair_color    skin_color 
-   &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;      
- 1 Luke Skywalker        172    77 blond         fair       
- 2 C-3PO                 167    75 &lt;NA&gt;          gold       
- 3 R2-D2                  96    32 &lt;NA&gt;          white, blue
- 4 Darth Vader           202   136 none          white      
- 5 Leia Organa           150    49 brown         light      
- 6 Owen Lars             178   120 brown, grey   light      
- 7 Beru Whitesun lars    165    75 brown         light      
- 8 R5-D4                  97    32 &lt;NA&gt;          white, red 
- 9 Biggs Darklighter     183    84 black         light      
-10 Obi-Wan Kenobi        182    77 auburn, white fair       
-# … with 77 more rows
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-star &lt;- starwars%&gt;%  
-    select(name:skin_color)  
-star %&gt;%  
-    relocate(skin_color)  %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .after=height) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .before=hair_color) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(height, .after =last_col()) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(is.numeric, .after =last_col()) %&gt;%  
-    head(2)  
-star %&gt;%  
-*   relocate(is.numeric, .after =is.character)
-```
-]]
-.column[.content[
-
-```
-# A tibble: 2 x 5
-  skin_color name           height  mass hair_color
-  &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
-1 fair       Luke Skywalker    172    77 blond     
-2 gold       C-3PO             167    75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height skin_color  mass hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;     
-1 Luke Skywalker    172 fair          77 blond     
-2 C-3PO             167 gold          75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height  mass skin_color hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;     
-1 Luke Skywalker    172    77 fair       blond     
-2 C-3PO             167    75 gold       &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name            mass hair_color skin_color height
-  &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;       &lt;int&gt;
-1 Luke Skywalker    77 blond      fair          172
-2 C-3PO             75 &lt;NA&gt;       gold          167
-```
-
-```
-# A tibble: 2 x 5
-  name           hair_color skin_color height  mass
-  &lt;chr&gt;          &lt;chr&gt;      &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;
-1 Luke Skywalker blond      fair          172    77
-2 C-3PO          &lt;NA&gt;       gold          167    75
-```
-
-```
-# A tibble: 87 x 5
-   name               hair_color    skin_color  height  mass
-   &lt;chr&gt;              &lt;chr&gt;         &lt;chr&gt;        &lt;int&gt; &lt;dbl&gt;
- 1 Luke Skywalker     blond         fair           172    77
- 2 C-3PO              &lt;NA&gt;          gold           167    75
- 3 R2-D2              &lt;NA&gt;          white, blue     96    32
- 4 Darth Vader        none          white          202   136
- 5 Leia Organa        brown         light          150    49
- 6 Owen Lars          brown, grey   light          178   120
- 7 Beru Whitesun lars brown         light          165    75
- 8 R5-D4              &lt;NA&gt;          white, red      97    32
- 9 Biggs Darklighter  black         light          183    84
-10 Obi-Wan Kenobi     auburn, white fair           182    77
-# … with 77 more rows
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-star &lt;- starwars%&gt;%  
-    select(name:skin_color)  
-star %&gt;%  
-    relocate(skin_color)  %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .after=height) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(skin_color, .before=hair_color) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(height, .after =last_col()) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(is.numeric, .after =last_col()) %&gt;%  
-    head(2)  
-star %&gt;%  
-    relocate(is.numeric, .after =is.character) %&gt;%  
-*   head(2)
-```
-]]
-.column[.content[
-
-```
-# A tibble: 2 x 5
-  skin_color name           height  mass hair_color
-  &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
-1 fair       Luke Skywalker    172    77 blond     
-2 gold       C-3PO             167    75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height skin_color  mass hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;     
-1 Luke Skywalker    172 fair          77 blond     
-2 C-3PO             167 gold          75 &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name           height  mass skin_color hair_color
-  &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;     
-1 Luke Skywalker    172    77 fair       blond     
-2 C-3PO             167    75 gold       &lt;NA&gt;      
-```
-
-```
-# A tibble: 2 x 5
-  name            mass hair_color skin_color height
-  &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;       &lt;int&gt;
-1 Luke Skywalker    77 blond      fair          172
-2 C-3PO             75 &lt;NA&gt;       gold          167
-```
-
-```
-# A tibble: 2 x 5
-  name           hair_color skin_color height  mass
-  &lt;chr&gt;          &lt;chr&gt;      &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;
-1 Luke Skywalker blond      fair          172    77
-2 C-3PO          &lt;NA&gt;       gold          167    75
-```
-
-```
-# A tibble: 2 x 5
-  name           hair_color skin_color height  mass
-  &lt;chr&gt;          &lt;chr&gt;      &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;
-1 Luke Skywalker blond      fair          172    77
-2 C-3PO          &lt;NA&gt;       gold          167    75
-```
-]]
-
----
-
-class:inverse,center,middle
+class: inverse,center,middle
 
 # `across()`
 
@@ -1150,2007 +34,2644 @@ class:inverse,center,middle
 
 
 
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across-auto[
 
 ```r
-*starwars
+*flights
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across-auto[
 
 ```
-# A tibble: 87 x 14
-   name  height  mass hair_color skin_color eye_color birth_year sex   gender
-   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
- 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
- 2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
- 3 R2-D2     96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
- 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
- 5 Leia…    150    49 brown      light      brown           19   fema… femin…
- 6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
- 7 Beru…    165    75 brown      light      blue            47   fema… femin…
- 8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
- 9 Bigg…    183    84 black      light      brown           24   male  mascu…
-10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
-# … with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
+# A tibble: 336,776 x 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across-auto[
 
 ```r
-starwars %&gt;%  
+flights %&gt;%
 *   summarize_if(is.character, n_distinct)
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across-auto[
 
 ```
-# A tibble: 1 x 8
-   name hair_color skin_color eye_color   sex gender homeworld species
-  &lt;int&gt;      &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;int&gt;  &lt;int&gt;     &lt;int&gt;   &lt;int&gt;
-1    87         13         31        15     5      3        49      38
+# A tibble: 1 x 4
+  carrier tailnum origin  dest
+    &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;int&gt;
+1      16    4044      3   105
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across-auto[
 
 ```r
-starwars %&gt;%  
-    summarize_if(is.character, n_distinct)  
-*starwars
+flights %&gt;%
+    summarize_if(is.character, n_distinct)
+*flights
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across-auto[
 
 ```
-# A tibble: 1 x 8
-   name hair_color skin_color eye_color   sex gender homeworld species
-  &lt;int&gt;      &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;int&gt;  &lt;int&gt;     &lt;int&gt;   &lt;int&gt;
-1    87         13         31        15     5      3        49      38
+# A tibble: 1 x 4
+  carrier tailnum origin  dest
+    &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;int&gt;
+1      16    4044      3   105
 ```
 
 ```
-# A tibble: 87 x 14
-   name  height  mass hair_color skin_color eye_color birth_year sex   gender
-   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
- 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
- 2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
- 3 R2-D2     96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
- 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
- 5 Leia…    150    49 brown      light      brown           19   fema… femin…
- 6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
- 7 Beru…    165    75 brown      light      blue            47   fema… femin…
- 8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
- 9 Bigg…    183    84 black      light      brown           24   male  mascu…
-10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
-# … with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
+# A tibble: 336,776 x 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across-auto[
 
 ```r
-starwars %&gt;%  
-    summarize_if(is.character, n_distinct)  
-starwars %&gt;%  
+flights %&gt;%
+    summarize_if(is.character, n_distinct)
+flights %&gt;%
 *   summarize(across(where(is.character), n_distinct))
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across-auto[
 
 ```
-# A tibble: 1 x 8
-   name hair_color skin_color eye_color   sex gender homeworld species
-  &lt;int&gt;      &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;int&gt;  &lt;int&gt;     &lt;int&gt;   &lt;int&gt;
-1    87         13         31        15     5      3        49      38
+# A tibble: 1 x 4
+  carrier tailnum origin  dest
+    &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;int&gt;
+1      16    4044      3   105
 ```
 
 ```
-# A tibble: 1 x 8
-   name hair_color skin_color eye_color   sex gender homeworld species
-  &lt;int&gt;      &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;int&gt;  &lt;int&gt;     &lt;int&gt;   &lt;int&gt;
-1    87         13         31        15     5      3        49      38
+# A tibble: 1 x 4
+  carrier tailnum origin  dest
+    &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;int&gt;
+1      16    4044      3   105
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across-auto[
 
 ```r
-starwars %&gt;%  
-    summarize_if(is.character, n_distinct)  
-starwars %&gt;%  
-    summarize(across(where(is.character), n_distinct))  
-*starwars
+flights %&gt;%
+    summarize_if(is.character, n_distinct)
+flights %&gt;%
+    summarize(across(where(is.character), n_distinct))
+*flights
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across-auto[
 
 ```
-# A tibble: 1 x 8
-   name hair_color skin_color eye_color   sex gender homeworld species
-  &lt;int&gt;      &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;int&gt;  &lt;int&gt;     &lt;int&gt;   &lt;int&gt;
-1    87         13         31        15     5      3        49      38
-```
-
-```
-# A tibble: 1 x 8
-   name hair_color skin_color eye_color   sex gender homeworld species
-  &lt;int&gt;      &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;int&gt;  &lt;int&gt;     &lt;int&gt;   &lt;int&gt;
-1    87         13         31        15     5      3        49      38
+# A tibble: 1 x 4
+  carrier tailnum origin  dest
+    &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;int&gt;
+1      16    4044      3   105
 ```
 
 ```
-# A tibble: 87 x 14
-   name  height  mass hair_color skin_color eye_color birth_year sex   gender
-   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
- 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
- 2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
- 3 R2-D2     96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
- 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
- 5 Leia…    150    49 brown      light      brown           19   fema… femin…
- 6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
- 7 Beru…    165    75 brown      light      blue            47   fema… femin…
- 8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
- 9 Bigg…    183    84 black      light      brown           24   male  mascu…
-10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
-# … with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
+# A tibble: 1 x 4
+  carrier tailnum origin  dest
+    &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;int&gt;
+1      16    4044      3   105
 ```
-]]
+
+```
+# A tibble: 336,776 x 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
+```
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across-auto[
 
 ```r
-starwars %&gt;%  
-    summarize_if(is.character, n_distinct)  
-starwars %&gt;%  
-    summarize(across(where(is.character), n_distinct))  
-starwars %&gt;%  
-*   summarize_at(vars(sex,gender,homeworld), n_distinct)
+flights %&gt;%
+    summarize_if(is.character, n_distinct)
+flights %&gt;%
+    summarize(across(where(is.character), n_distinct))
+flights %&gt;%
+*   summarize_at(vars(tailnum, origin, carrier), n_distinct)
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across-auto[
 
 ```
-# A tibble: 1 x 8
-   name hair_color skin_color eye_color   sex gender homeworld species
-  &lt;int&gt;      &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;int&gt;  &lt;int&gt;     &lt;int&gt;   &lt;int&gt;
-1    87         13         31        15     5      3        49      38
+# A tibble: 1 x 4
+  carrier tailnum origin  dest
+    &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;int&gt;
+1      16    4044      3   105
 ```
 
 ```
-# A tibble: 1 x 8
-   name hair_color skin_color eye_color   sex gender homeworld species
-  &lt;int&gt;      &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;int&gt;  &lt;int&gt;     &lt;int&gt;   &lt;int&gt;
-1    87         13         31        15     5      3        49      38
+# A tibble: 1 x 4
+  carrier tailnum origin  dest
+    &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;int&gt;
+1      16    4044      3   105
 ```
 
 ```
 # A tibble: 1 x 3
-    sex gender homeworld
-  &lt;int&gt;  &lt;int&gt;     &lt;int&gt;
-1     5      3        49
+  tailnum origin carrier
+    &lt;int&gt;  &lt;int&gt;   &lt;int&gt;
+1    4044      3      16
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across-auto[
 
 ```r
-starwars %&gt;%  
-    summarize_if(is.character, n_distinct)  
-starwars %&gt;%  
-    summarize(across(where(is.character), n_distinct))  
-starwars %&gt;%  
-    summarize_at(vars(sex,gender,homeworld), n_distinct)  
-*starwars
+flights %&gt;%
+    summarize_if(is.character, n_distinct)
+flights %&gt;%
+    summarize(across(where(is.character), n_distinct))
+flights %&gt;%
+    summarize_at(vars(tailnum, origin, carrier), n_distinct)
+*flights
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across-auto[
 
 ```
-# A tibble: 1 x 8
-   name hair_color skin_color eye_color   sex gender homeworld species
-  &lt;int&gt;      &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;int&gt;  &lt;int&gt;     &lt;int&gt;   &lt;int&gt;
-1    87         13         31        15     5      3        49      38
+# A tibble: 1 x 4
+  carrier tailnum origin  dest
+    &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;int&gt;
+1      16    4044      3   105
 ```
 
 ```
-# A tibble: 1 x 8
-   name hair_color skin_color eye_color   sex gender homeworld species
-  &lt;int&gt;      &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;int&gt;  &lt;int&gt;     &lt;int&gt;   &lt;int&gt;
-1    87         13         31        15     5      3        49      38
+# A tibble: 1 x 4
+  carrier tailnum origin  dest
+    &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;int&gt;
+1      16    4044      3   105
 ```
 
 ```
 # A tibble: 1 x 3
-    sex gender homeworld
-  &lt;int&gt;  &lt;int&gt;     &lt;int&gt;
-1     5      3        49
+  tailnum origin carrier
+    &lt;int&gt;  &lt;int&gt;   &lt;int&gt;
+1    4044      3      16
 ```
 
 ```
-# A tibble: 87 x 14
-   name  height  mass hair_color skin_color eye_color birth_year sex   gender
-   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
- 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
- 2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
- 3 R2-D2     96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
- 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
- 5 Leia…    150    49 brown      light      brown           19   fema… femin…
- 6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
- 7 Beru…    165    75 brown      light      blue            47   fema… femin…
- 8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
- 9 Bigg…    183    84 black      light      brown           24   male  mascu…
-10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
-# … with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
+# A tibble: 336,776 x 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across-auto[
 
 ```r
-starwars %&gt;%  
-    summarize_if(is.character, n_distinct)  
-starwars %&gt;%  
-    summarize(across(where(is.character), n_distinct))  
-starwars %&gt;%  
-    summarize_at(vars(sex,gender,homeworld), n_distinct)  
-starwars %&gt;%  
-*   group_by(species)
+flights %&gt;%
+    summarize_if(is.character, n_distinct)
+flights %&gt;%
+    summarize(across(where(is.character), n_distinct))
+flights %&gt;%
+    summarize_at(vars(tailnum, origin, carrier), n_distinct)
+flights%&gt;%
+*   group_by(origin)
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across-auto[
 
 ```
-# A tibble: 1 x 8
-   name hair_color skin_color eye_color   sex gender homeworld species
-  &lt;int&gt;      &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;int&gt;  &lt;int&gt;     &lt;int&gt;   &lt;int&gt;
-1    87         13         31        15     5      3        49      38
+# A tibble: 1 x 4
+  carrier tailnum origin  dest
+    &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;int&gt;
+1      16    4044      3   105
 ```
 
 ```
-# A tibble: 1 x 8
-   name hair_color skin_color eye_color   sex gender homeworld species
-  &lt;int&gt;      &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;int&gt;  &lt;int&gt;     &lt;int&gt;   &lt;int&gt;
-1    87         13         31        15     5      3        49      38
+# A tibble: 1 x 4
+  carrier tailnum origin  dest
+    &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;int&gt;
+1      16    4044      3   105
 ```
 
 ```
 # A tibble: 1 x 3
-    sex gender homeworld
-  &lt;int&gt;  &lt;int&gt;     &lt;int&gt;
-1     5      3        49
+  tailnum origin carrier
+    &lt;int&gt;  &lt;int&gt;   &lt;int&gt;
+1    4044      3      16
 ```
 
 ```
-# A tibble: 87 x 14
-# Groups:   species [38]
-   name  height  mass hair_color skin_color eye_color birth_year sex   gender
-   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
- 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
- 2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
- 3 R2-D2     96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
- 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
- 5 Leia…    150    49 brown      light      brown           19   fema… femin…
- 6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
- 7 Beru…    165    75 brown      light      blue            47   fema… femin…
- 8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
- 9 Bigg…    183    84 black      light      brown           24   male  mascu…
-10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
-# … with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
+# A tibble: 336,776 x 19
+# Groups:   origin [3]
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across-auto[
 
 ```r
-starwars %&gt;%  
-    summarize_if(is.character, n_distinct)  
-starwars %&gt;%  
-    summarize(across(where(is.character), n_distinct))  
-starwars %&gt;%  
-    summarize_at(vars(sex,gender,homeworld), n_distinct)  
-starwars %&gt;%  
-    group_by(species) %&gt;%  
+flights %&gt;%
+    summarize_if(is.character, n_distinct)
+flights %&gt;%
+    summarize(across(where(is.character), n_distinct))
+flights %&gt;%
+    summarize_at(vars(tailnum, origin, carrier), n_distinct)
+flights%&gt;%
+    group_by(origin) %&gt;%
 *   filter(n() &gt; 1)
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across-auto[
 
 ```
-# A tibble: 1 x 8
-   name hair_color skin_color eye_color   sex gender homeworld species
-  &lt;int&gt;      &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;int&gt;  &lt;int&gt;     &lt;int&gt;   &lt;int&gt;
-1    87         13         31        15     5      3        49      38
+# A tibble: 1 x 4
+  carrier tailnum origin  dest
+    &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;int&gt;
+1      16    4044      3   105
 ```
 
 ```
-# A tibble: 1 x 8
-   name hair_color skin_color eye_color   sex gender homeworld species
-  &lt;int&gt;      &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;int&gt;  &lt;int&gt;     &lt;int&gt;   &lt;int&gt;
-1    87         13         31        15     5      3        49      38
+# A tibble: 1 x 4
+  carrier tailnum origin  dest
+    &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;int&gt;
+1      16    4044      3   105
 ```
 
 ```
 # A tibble: 1 x 3
-    sex gender homeworld
-  &lt;int&gt;  &lt;int&gt;     &lt;int&gt;
-1     5      3        49
+  tailnum origin carrier
+    &lt;int&gt;  &lt;int&gt;   &lt;int&gt;
+1    4044      3      16
 ```
 
 ```
-# A tibble: 58 x 14
-# Groups:   species [9]
-   name  height  mass hair_color skin_color eye_color birth_year sex   gender
-   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
- 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
- 2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
- 3 R2-D2     96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
- 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
- 5 Leia…    150    49 brown      light      brown           19   fema… femin…
- 6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
- 7 Beru…    165    75 brown      light      blue            47   fema… femin…
- 8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
- 9 Bigg…    183    84 black      light      brown           24   male  mascu…
-10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
-# … with 48 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
+# A tibble: 336,776 x 19
+# Groups:   origin [3]
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across-auto[
 
 ```r
-starwars %&gt;%  
-    summarize_if(is.character, n_distinct)  
-starwars %&gt;%  
-    summarize(across(where(is.character), n_distinct))  
-starwars %&gt;%  
-    summarize_at(vars(sex,gender,homeworld), n_distinct)  
-starwars %&gt;%  
-    group_by(species) %&gt;%  
-    filter(n() &gt; 1) %&gt;%  
-*   summarize(across(c(sex,gender,homeworld), n_distinct))
+flights %&gt;%
+    summarize_if(is.character, n_distinct)
+flights %&gt;%
+    summarize(across(where(is.character), n_distinct))
+flights %&gt;%
+    summarize_at(vars(tailnum, origin, carrier), n_distinct)
+flights%&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+*   summarize(across(c(tailnum, carrier), n_distinct))
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across-auto[
 
 ```
-# A tibble: 1 x 8
-   name hair_color skin_color eye_color   sex gender homeworld species
-  &lt;int&gt;      &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;int&gt;  &lt;int&gt;     &lt;int&gt;   &lt;int&gt;
-1    87         13         31        15     5      3        49      38
+# A tibble: 1 x 4
+  carrier tailnum origin  dest
+    &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;int&gt;
+1      16    4044      3   105
 ```
 
 ```
-# A tibble: 1 x 8
-   name hair_color skin_color eye_color   sex gender homeworld species
-  &lt;int&gt;      &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;int&gt;  &lt;int&gt;     &lt;int&gt;   &lt;int&gt;
-1    87         13         31        15     5      3        49      38
+# A tibble: 1 x 4
+  carrier tailnum origin  dest
+    &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;int&gt;
+1      16    4044      3   105
 ```
 
 ```
 # A tibble: 1 x 3
-    sex gender homeworld
-  &lt;int&gt;  &lt;int&gt;     &lt;int&gt;
-1     5      3        49
+  tailnum origin carrier
+    &lt;int&gt;  &lt;int&gt;   &lt;int&gt;
+1    4044      3      16
 ```
 
 ```
-# A tibble: 9 x 4
-  species    sex gender homeworld
-  &lt;chr&gt;    &lt;int&gt;  &lt;int&gt;     &lt;int&gt;
-1 Droid        1      2         3
-2 Gungan       1      1         1
-3 Human        2      2        16
-4 Kaminoan     2      2         1
-5 Mirialan     1      1         1
-6 Twi'lek      2      2         1
-7 Wookiee      1      1         1
-8 Zabrak       1      1         2
-9 &lt;NA&gt;         1      1         3
+# A tibble: 3 x 3
+  origin tailnum carrier
+  &lt;chr&gt;    &lt;int&gt;   &lt;int&gt;
+1 EWR       3041      12
+2 JFK       1958      10
+3 LGA       2945      13
 ```
-]]
+]
+
+&lt;style&gt;
+.panel1-across-auto {
+  color: black;
+  width: 51.3333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-across-auto {
+  color: black;
+  width: 46.6666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-across-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
 
 ---
 
 
 
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across2-auto[
 
 ```r
-*starwars
+*flights
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across2-auto[
 
 ```
-# A tibble: 87 x 14
-   name  height  mass hair_color skin_color eye_color birth_year sex   gender
-   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
- 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
- 2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
- 3 R2-D2     96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
- 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
- 5 Leia…    150    49 brown      light      brown           19   fema… femin…
- 6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
- 7 Beru…    165    75 brown      light      blue            47   fema… femin…
- 8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
- 9 Bigg…    183    84 black      light      brown           24   male  mascu…
-10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
-# … with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
+# A tibble: 336,776 x 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across2-auto[
 
 ```r
-starwars %&gt;%  
-*   group_by(species)
+flights %&gt;%
+*   group_by(origin)
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across2-auto[
 
 ```
-# A tibble: 87 x 14
-# Groups:   species [38]
-   name  height  mass hair_color skin_color eye_color birth_year sex   gender
-   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
- 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
- 2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
- 3 R2-D2     96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
- 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
- 5 Leia…    150    49 brown      light      brown           19   fema… femin…
- 6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
- 7 Beru…    165    75 brown      light      blue            47   fema… femin…
- 8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
- 9 Bigg…    183    84 black      light      brown           24   male  mascu…
-10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
-# … with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
+# A tibble: 336,776 x 19
+# Groups:   origin [3]
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across2-auto[
 
 ```r
-starwars %&gt;%  
-    group_by(species) %&gt;%  
+flights %&gt;%
+    group_by(origin) %&gt;%
 *   filter(n() &gt; 1)
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across2-auto[
 
 ```
-# A tibble: 58 x 14
-# Groups:   species [9]
-   name  height  mass hair_color skin_color eye_color birth_year sex   gender
-   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
- 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
- 2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
- 3 R2-D2     96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
- 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
- 5 Leia…    150    49 brown      light      brown           19   fema… femin…
- 6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
- 7 Beru…    165    75 brown      light      blue            47   fema… femin…
- 8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
- 9 Bigg…    183    84 black      light      brown           24   male  mascu…
-10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
-# … with 48 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
+# A tibble: 336,776 x 19
+# Groups:   origin [3]
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across2-auto[
 
 ```r
-starwars %&gt;%  
-    group_by(species) %&gt;%  
-    filter(n() &gt; 1) %&gt;%  
-*   summarize(across(where(is.numeric),mean))
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+*   summarize(across(c(arr_delay,dep_delay),mean))
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across2-auto[
 
 ```
-# A tibble: 9 x 4
-  species  height  mass birth_year
-  &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
-1 Droid       NA   NA           NA
-2 Gungan     209.  NA           NA
-3 Human       NA   NA           NA
-4 Kaminoan   221   NA           NA
-5 Mirialan   168   53.1         49
-6 Twi'lek    179   NA           NA
-7 Wookiee    231  124           NA
-8 Zabrak     173   NA           NA
-9 &lt;NA&gt;        NA   NA           NA
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR           NA        NA
+2 JFK           NA        NA
+3 LGA           NA        NA
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across2-auto[
 
 ```r
-starwars %&gt;%  
-    group_by(species) %&gt;%  
-    filter(n() &gt; 1) %&gt;%  
-    summarize(across(where(is.numeric),mean))  
-*starwars
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+*flights
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across2-auto[
 
 ```
-# A tibble: 9 x 4
-  species  height  mass birth_year
-  &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
-1 Droid       NA   NA           NA
-2 Gungan     209.  NA           NA
-3 Human       NA   NA           NA
-4 Kaminoan   221   NA           NA
-5 Mirialan   168   53.1         49
-6 Twi'lek    179   NA           NA
-7 Wookiee    231  124           NA
-8 Zabrak     173   NA           NA
-9 &lt;NA&gt;        NA   NA           NA
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR           NA        NA
+2 JFK           NA        NA
+3 LGA           NA        NA
 ```
 
 ```
-# A tibble: 87 x 14
-   name  height  mass hair_color skin_color eye_color birth_year sex   gender
-   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
- 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
- 2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
- 3 R2-D2     96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
- 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
- 5 Leia…    150    49 brown      light      brown           19   fema… femin…
- 6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
- 7 Beru…    165    75 brown      light      blue            47   fema… femin…
- 8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
- 9 Bigg…    183    84 black      light      brown           24   male  mascu…
-10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
-# … with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
+# A tibble: 336,776 x 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across2-auto[
 
 ```r
-starwars %&gt;%  
-    group_by(species) %&gt;%  
-    filter(n() &gt; 1) %&gt;%  
-    summarize(across(where(is.numeric),mean))  
-starwars %&gt;%  
-*   group_by(species)
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+flights %&gt;%
+*   group_by(origin)
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across2-auto[
 
 ```
-# A tibble: 9 x 4
-  species  height  mass birth_year
-  &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
-1 Droid       NA   NA           NA
-2 Gungan     209.  NA           NA
-3 Human       NA   NA           NA
-4 Kaminoan   221   NA           NA
-5 Mirialan   168   53.1         49
-6 Twi'lek    179   NA           NA
-7 Wookiee    231  124           NA
-8 Zabrak     173   NA           NA
-9 &lt;NA&gt;        NA   NA           NA
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR           NA        NA
+2 JFK           NA        NA
+3 LGA           NA        NA
 ```
 
 ```
-# A tibble: 87 x 14
-# Groups:   species [38]
-   name  height  mass hair_color skin_color eye_color birth_year sex   gender
-   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
- 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
- 2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
- 3 R2-D2     96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
- 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
- 5 Leia…    150    49 brown      light      brown           19   fema… femin…
- 6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
- 7 Beru…    165    75 brown      light      blue            47   fema… femin…
- 8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
- 9 Bigg…    183    84 black      light      brown           24   male  mascu…
-10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
-# … with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
+# A tibble: 336,776 x 19
+# Groups:   origin [3]
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across2-auto[
 
 ```r
-starwars %&gt;%  
-    group_by(species) %&gt;%  
-    filter(n() &gt; 1) %&gt;%  
-    summarize(across(where(is.numeric),mean))  
-starwars %&gt;%  
-    group_by(species) %&gt;%  
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+flights %&gt;%
+    group_by(origin) %&gt;%
 *   filter(n() &gt; 1)
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across2-auto[
 
 ```
-# A tibble: 9 x 4
-  species  height  mass birth_year
-  &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
-1 Droid       NA   NA           NA
-2 Gungan     209.  NA           NA
-3 Human       NA   NA           NA
-4 Kaminoan   221   NA           NA
-5 Mirialan   168   53.1         49
-6 Twi'lek    179   NA           NA
-7 Wookiee    231  124           NA
-8 Zabrak     173   NA           NA
-9 &lt;NA&gt;        NA   NA           NA
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR           NA        NA
+2 JFK           NA        NA
+3 LGA           NA        NA
 ```
 
 ```
-# A tibble: 58 x 14
-# Groups:   species [9]
-   name  height  mass hair_color skin_color eye_color birth_year sex   gender
-   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
- 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
- 2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
- 3 R2-D2     96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
- 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
- 5 Leia…    150    49 brown      light      brown           19   fema… femin…
- 6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
- 7 Beru…    165    75 brown      light      blue            47   fema… femin…
- 8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
- 9 Bigg…    183    84 black      light      brown           24   male  mascu…
-10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
-# … with 48 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
+# A tibble: 336,776 x 19
+# Groups:   origin [3]
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across2-auto[
 
 ```r
-starwars %&gt;%  
-    group_by(species) %&gt;%  
-    filter(n() &gt; 1) %&gt;%  
-    summarize(across(where(is.numeric),mean))  
-starwars %&gt;%  
-    group_by(species) %&gt;%  
-    filter(n() &gt; 1) %&gt;%  
-*   summarize_if(is.numeric,mean)
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+*   summarize(across(c(arr_delay,dep_delay),mean,na.rm=T))
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across2-auto[
 
 ```
-# A tibble: 9 x 4
-  species  height  mass birth_year
-  &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
-1 Droid       NA   NA           NA
-2 Gungan     209.  NA           NA
-3 Human       NA   NA           NA
-4 Kaminoan   221   NA           NA
-5 Mirialan   168   53.1         49
-6 Twi'lek    179   NA           NA
-7 Wookiee    231  124           NA
-8 Zabrak     173   NA           NA
-9 &lt;NA&gt;        NA   NA           NA
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR           NA        NA
+2 JFK           NA        NA
+3 LGA           NA        NA
 ```
 
 ```
-# A tibble: 9 x 4
-  species  height  mass birth_year
-  &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
-1 Droid       NA   NA           NA
-2 Gungan     209.  NA           NA
-3 Human       NA   NA           NA
-4 Kaminoan   221   NA           NA
-5 Mirialan   168   53.1         49
-6 Twi'lek    179   NA           NA
-7 Wookiee    231  124           NA
-8 Zabrak     173   NA           NA
-9 &lt;NA&gt;        NA   NA           NA
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR         9.11      15.1
+2 JFK         5.55      12.1
+3 LGA         5.78      10.3
 ```
-]]
+]
+
+---
+count: false
+ 
+
+.panel1-across2-auto[
+
+```r
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean,na.rm=T))
+
+*flights
+```
+]
+ 
+.panel2-across2-auto[
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR           NA        NA
+2 JFK           NA        NA
+3 LGA           NA        NA
+```
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR         9.11      15.1
+2 JFK         5.55      12.1
+3 LGA         5.78      10.3
+```
+
+```
+# A tibble: 336,776 x 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
+```
+]
+
+---
+count: false
+ 
+
+.panel1-across2-auto[
+
+```r
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean,na.rm=T))
+
+flights %&gt;%
+*   drop_na(c(arr_delay,dep_delay))
+```
+]
+ 
+.panel2-across2-auto[
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR           NA        NA
+2 JFK           NA        NA
+3 LGA           NA        NA
+```
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR         9.11      15.1
+2 JFK         5.55      12.1
+3 LGA         5.78      10.3
+```
+
+```
+# A tibble: 327,346 x 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 327,336 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
+```
+]
+
+---
+count: false
+ 
+
+.panel1-across2-auto[
+
+```r
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean,na.rm=T))
+
+flights %&gt;%
+    drop_na(c(arr_delay,dep_delay)) %&gt;%
+*   group_by(origin)
+```
+]
+ 
+.panel2-across2-auto[
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR           NA        NA
+2 JFK           NA        NA
+3 LGA           NA        NA
+```
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR         9.11      15.1
+2 JFK         5.55      12.1
+3 LGA         5.78      10.3
+```
+
+```
+# A tibble: 327,346 x 19
+# Groups:   origin [3]
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 327,336 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
+```
+]
+
+---
+count: false
+ 
+
+.panel1-across2-auto[
+
+```r
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean,na.rm=T))
+
+flights %&gt;%
+    drop_na(c(arr_delay,dep_delay)) %&gt;%
+    group_by(origin) %&gt;%
+*   filter(n() &gt; 1)
+```
+]
+ 
+.panel2-across2-auto[
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR           NA        NA
+2 JFK           NA        NA
+3 LGA           NA        NA
+```
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR         9.11      15.1
+2 JFK         5.55      12.1
+3 LGA         5.78      10.3
+```
+
+```
+# A tibble: 327,346 x 19
+# Groups:   origin [3]
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 327,336 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
+```
+]
+
+---
+count: false
+ 
+
+.panel1-across2-auto[
+
+```r
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean,na.rm=T))
+
+flights %&gt;%
+    drop_na(c(arr_delay,dep_delay)) %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+*   summarize(across(c(arr_delay,dep_delay),mean))
+```
+]
+ 
+.panel2-across2-auto[
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR           NA        NA
+2 JFK           NA        NA
+3 LGA           NA        NA
+```
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR         9.11      15.1
+2 JFK         5.55      12.1
+3 LGA         5.78      10.3
+```
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR         9.11      15.0
+2 JFK         5.55      12.0
+3 LGA         5.78      10.3
+```
+]
+
+---
+count: false
+ 
+
+.panel1-across2-auto[
+
+```r
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean,na.rm=T))
+
+flights %&gt;%
+    drop_na(c(arr_delay,dep_delay)) %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+*flights
+```
+]
+ 
+.panel2-across2-auto[
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR           NA        NA
+2 JFK           NA        NA
+3 LGA           NA        NA
+```
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR         9.11      15.1
+2 JFK         5.55      12.1
+3 LGA         5.78      10.3
+```
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR         9.11      15.0
+2 JFK         5.55      12.0
+3 LGA         5.78      10.3
+```
+
+```
+# A tibble: 336,776 x 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
+```
+]
+
+---
+count: false
+ 
+
+.panel1-across2-auto[
+
+```r
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean,na.rm=T))
+
+flights %&gt;%
+    drop_na(c(arr_delay,dep_delay)) %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+flights %&gt;%
+*   drop_na(c(arr_delay,dep_delay))
+```
+]
+ 
+.panel2-across2-auto[
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR           NA        NA
+2 JFK           NA        NA
+3 LGA           NA        NA
+```
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR         9.11      15.1
+2 JFK         5.55      12.1
+3 LGA         5.78      10.3
+```
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR         9.11      15.0
+2 JFK         5.55      12.0
+3 LGA         5.78      10.3
+```
+
+```
+# A tibble: 327,346 x 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 327,336 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
+```
+]
+
+---
+count: false
+ 
+
+.panel1-across2-auto[
+
+```r
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean,na.rm=T))
+
+flights %&gt;%
+    drop_na(c(arr_delay,dep_delay)) %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+flights %&gt;%
+    drop_na(c(arr_delay,dep_delay)) %&gt;%
+*   group_by(origin)
+```
+]
+ 
+.panel2-across2-auto[
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR           NA        NA
+2 JFK           NA        NA
+3 LGA           NA        NA
+```
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR         9.11      15.1
+2 JFK         5.55      12.1
+3 LGA         5.78      10.3
+```
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR         9.11      15.0
+2 JFK         5.55      12.0
+3 LGA         5.78      10.3
+```
+
+```
+# A tibble: 327,346 x 19
+# Groups:   origin [3]
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 327,336 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
+```
+]
+
+---
+count: false
+ 
+
+.panel1-across2-auto[
+
+```r
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean,na.rm=T))
+
+flights %&gt;%
+    drop_na(c(arr_delay,dep_delay)) %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+flights %&gt;%
+    drop_na(c(arr_delay,dep_delay)) %&gt;%
+    group_by(origin) %&gt;%
+*   filter(n() &gt; 1)
+```
+]
+ 
+.panel2-across2-auto[
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR           NA        NA
+2 JFK           NA        NA
+3 LGA           NA        NA
+```
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR         9.11      15.1
+2 JFK         5.55      12.1
+3 LGA         5.78      10.3
+```
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR         9.11      15.0
+2 JFK         5.55      12.0
+3 LGA         5.78      10.3
+```
+
+```
+# A tibble: 327,346 x 19
+# Groups:   origin [3]
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 327,336 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
+```
+]
+
+---
+count: false
+ 
+
+.panel1-across2-auto[
+
+```r
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean,na.rm=T))
+
+flights %&gt;%
+    drop_na(c(arr_delay,dep_delay)) %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+flights %&gt;%
+    drop_na(c(arr_delay,dep_delay)) %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+*   summarize(across(c(arr_delay,dep_delay),mean,.names = "mean_{col}"))
+```
+]
+ 
+.panel2-across2-auto[
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR           NA        NA
+2 JFK           NA        NA
+3 LGA           NA        NA
+```
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR         9.11      15.1
+2 JFK         5.55      12.1
+3 LGA         5.78      10.3
+```
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR         9.11      15.0
+2 JFK         5.55      12.0
+3 LGA         5.78      10.3
+```
+
+```
+# A tibble: 3 x 3
+  origin mean_arr_delay mean_dep_delay
+  &lt;chr&gt;           &lt;dbl&gt;          &lt;dbl&gt;
+1 EWR              9.11           15.0
+2 JFK              5.55           12.0
+3 LGA              5.78           10.3
+```
+]
+
+---
+count: false
+ 
+
+.panel1-across2-auto[
+
+```r
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+flights %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean,na.rm=T))
+
+flights %&gt;%
+    drop_na(c(arr_delay,dep_delay)) %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean))
+
+flights %&gt;%
+    drop_na(c(arr_delay,dep_delay)) %&gt;%
+    group_by(origin) %&gt;%
+    filter(n() &gt; 1) %&gt;%
+    summarize(across(c(arr_delay,dep_delay),mean,.names = "mean_{col}"))
+```
+]
+ 
+.panel2-across2-auto[
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR           NA        NA
+2 JFK           NA        NA
+3 LGA           NA        NA
+```
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR         9.11      15.1
+2 JFK         5.55      12.1
+3 LGA         5.78      10.3
+```
+
+```
+# A tibble: 3 x 3
+  origin arr_delay dep_delay
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 EWR         9.11      15.0
+2 JFK         5.55      12.0
+3 LGA         5.78      10.3
+```
+
+```
+# A tibble: 3 x 3
+  origin mean_arr_delay mean_dep_delay
+  &lt;chr&gt;           &lt;dbl&gt;          &lt;dbl&gt;
+1 EWR              9.11           15.0
+2 JFK              5.55           12.0
+3 LGA              5.78           10.3
+```
+]
+
+&lt;style&gt;
+.panel1-across2-auto {
+  color: black;
+  width: 51.3333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-across2-auto {
+  color: black;
+  width: 46.6666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-across2-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
 
 ---
 
 
 
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across3-auto[
 
 ```r
-*mtcars
+*flights
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across3-auto[
 
 ```
-                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
-Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
-Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
-Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
-Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
-Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
-Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
-Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
-Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
-Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
-Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
-Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
-Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
-Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
-Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
-Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
-Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
-Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
-Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
-AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
-Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
-Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
-Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
-Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
-Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
-Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
-Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
-Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
-Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
+# A tibble: 336,776 x 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across3-auto[
 
 ```r
-mtcars %&gt;%  
-*   group_by(cyl)
+flights %&gt;%
+*   drop_na(dep_delay)
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across3-auto[
 
 ```
-# A tibble: 32 x 11
-# Groups:   cyl [3]
-     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
-   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1  21       6  160    110  3.9   2.62  16.5     0     1     4     4
- 2  21       6  160    110  3.9   2.88  17.0     0     1     4     4
- 3  22.8     4  108     93  3.85  2.32  18.6     1     1     4     1
- 4  21.4     6  258    110  3.08  3.22  19.4     1     0     3     1
- 5  18.7     8  360    175  3.15  3.44  17.0     0     0     3     2
- 6  18.1     6  225    105  2.76  3.46  20.2     1     0     3     1
- 7  14.3     8  360    245  3.21  3.57  15.8     0     0     3     4
- 8  24.4     4  147.    62  3.69  3.19  20       1     0     4     2
- 9  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2
-10  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4
-# … with 22 more rows
+# A tibble: 328,521 x 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 328,511 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across3-auto[
 
 ```r
-mtcars %&gt;%  
-    group_by(cyl) %&gt;%  
-*   summarise(range=range(mpg))
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+*   group_by(origin)
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across3-auto[
+
+```
+# A tibble: 328,521 x 19
+# Groups:   origin [3]
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 328,511 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
+```
+]
+
+---
+count: false
+ 
+
+.panel1-across3-auto[
+
+```r
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+*   summarise(range=range(dep_delay))
+```
+]
+ 
+.panel2-across3-auto[
 
 ```
 # A tibble: 6 x 2
-# Groups:   cyl [3]
-    cyl range
-  &lt;dbl&gt; &lt;dbl&gt;
-1     4  21.4
-2     4  33.9
-3     6  17.8
-4     6  21.4
-5     8  10.4
-6     8  19.2
+# Groups:   origin [3]
+  origin range
+  &lt;chr&gt;  &lt;dbl&gt;
+1 EWR      -25
+2 EWR     1126
+3 JFK      -43
+4 JFK     1301
+5 LGA      -33
+6 LGA      911
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across3-auto[
 
 ```r
-mtcars %&gt;%  
-    group_by(cyl) %&gt;%  
-    summarise(range=range(mpg))  
-*mtcars
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+    summarise(range=range(dep_delay))
+*flights
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across3-auto[
 
 ```
 # A tibble: 6 x 2
-# Groups:   cyl [3]
-    cyl range
-  &lt;dbl&gt; &lt;dbl&gt;
-1     4  21.4
-2     4  33.9
-3     6  17.8
-4     6  21.4
-5     8  10.4
-6     8  19.2
+# Groups:   origin [3]
+  origin range
+  &lt;chr&gt;  &lt;dbl&gt;
+1 EWR      -25
+2 EWR     1126
+3 JFK      -43
+4 JFK     1301
+5 LGA      -33
+6 LGA      911
 ```
 
 ```
-                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
-Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
-Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
-Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
-Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
-Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
-Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
-Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
-Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
-Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
-Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
-Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
-Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
-Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
-Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
-Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
-Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
-Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
-Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
-AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
-Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
-Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
-Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
-Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
-Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
-Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
-Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
-Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
-Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
+# A tibble: 336,776 x 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across3-auto[
 
 ```r
-mtcars %&gt;%  
-    group_by(cyl) %&gt;%  
-    summarise(range=range(mpg))  
-mtcars %&gt;%  
-*   group_by(cyl)
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+    summarise(range=range(dep_delay))
+flights %&gt;%
+*   drop_na(dep_delay)
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across3-auto[
 
 ```
 # A tibble: 6 x 2
-# Groups:   cyl [3]
-    cyl range
-  &lt;dbl&gt; &lt;dbl&gt;
-1     4  21.4
-2     4  33.9
-3     6  17.8
-4     6  21.4
-5     8  10.4
-6     8  19.2
+# Groups:   origin [3]
+  origin range
+  &lt;chr&gt;  &lt;dbl&gt;
+1 EWR      -25
+2 EWR     1126
+3 JFK      -43
+4 JFK     1301
+5 LGA      -33
+6 LGA      911
 ```
 
 ```
-# A tibble: 32 x 11
-# Groups:   cyl [3]
-     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
-   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1  21       6  160    110  3.9   2.62  16.5     0     1     4     4
- 2  21       6  160    110  3.9   2.88  17.0     0     1     4     4
- 3  22.8     4  108     93  3.85  2.32  18.6     1     1     4     1
- 4  21.4     6  258    110  3.08  3.22  19.4     1     0     3     1
- 5  18.7     8  360    175  3.15  3.44  17.0     0     0     3     2
- 6  18.1     6  225    105  2.76  3.46  20.2     1     0     3     1
- 7  14.3     8  360    245  3.21  3.57  15.8     0     0     3     4
- 8  24.4     4  147.    62  3.69  3.19  20       1     0     4     2
- 9  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2
-10  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4
-# … with 22 more rows
+# A tibble: 328,521 x 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 328,511 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across3-auto[
 
 ```r
-mtcars %&gt;%  
-    group_by(cyl) %&gt;%  
-    summarise(range=range(mpg))  
-mtcars %&gt;%  
-    group_by(cyl) %&gt;%  
-*   summarise(range=range(mpg))
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+    summarise(range=range(dep_delay))
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+*   group_by(origin)
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across3-auto[
 
 ```
 # A tibble: 6 x 2
-# Groups:   cyl [3]
-    cyl range
-  &lt;dbl&gt; &lt;dbl&gt;
-1     4  21.4
-2     4  33.9
-3     6  17.8
-4     6  21.4
-5     8  10.4
-6     8  19.2
+# Groups:   origin [3]
+  origin range
+  &lt;chr&gt;  &lt;dbl&gt;
+1 EWR      -25
+2 EWR     1126
+3 JFK      -43
+4 JFK     1301
+5 LGA      -33
+6 LGA      911
 ```
 
 ```
-# A tibble: 6 x 2
-# Groups:   cyl [3]
-    cyl range
-  &lt;dbl&gt; &lt;dbl&gt;
-1     4  21.4
-2     4  33.9
-3     6  17.8
-4     6  21.4
-5     8  10.4
-6     8  19.2
+# A tibble: 328,521 x 19
+# Groups:   origin [3]
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 328,511 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across3-auto[
 
 ```r
-mtcars %&gt;%  
-    group_by(cyl) %&gt;%  
-    summarise(range=range(mpg))  
-mtcars %&gt;%  
-    group_by(cyl) %&gt;%  
-    summarise(range=range(mpg)) %&gt;%  
-*   mutate(name=rep(c("min","max"), length(unique(cyl))))
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+    summarise(range=range(dep_delay))
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+*   summarise(range=range(dep_delay))
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across3-auto[
 
 ```
 # A tibble: 6 x 2
-# Groups:   cyl [3]
-    cyl range
-  &lt;dbl&gt; &lt;dbl&gt;
-1     4  21.4
-2     4  33.9
-3     6  17.8
-4     6  21.4
-5     8  10.4
-6     8  19.2
+# Groups:   origin [3]
+  origin range
+  &lt;chr&gt;  &lt;dbl&gt;
+1 EWR      -25
+2 EWR     1126
+3 JFK      -43
+4 JFK     1301
+5 LGA      -33
+6 LGA      911
+```
+
+```
+# A tibble: 6 x 2
+# Groups:   origin [3]
+  origin range
+  &lt;chr&gt;  &lt;dbl&gt;
+1 EWR      -25
+2 EWR     1126
+3 JFK      -43
+4 JFK     1301
+5 LGA      -33
+6 LGA      911
+```
+]
+
+---
+count: false
+ 
+
+.panel1-across3-auto[
+
+```r
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+    summarise(range=range(dep_delay))
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+    summarise(range=range(dep_delay)) %&gt;%
+*   mutate(name=rep(c("min","max"), length(unique(origin))))
+```
+]
+ 
+.panel2-across3-auto[
+
+```
+# A tibble: 6 x 2
+# Groups:   origin [3]
+  origin range
+  &lt;chr&gt;  &lt;dbl&gt;
+1 EWR      -25
+2 EWR     1126
+3 JFK      -43
+4 JFK     1301
+5 LGA      -33
+6 LGA      911
 ```
 
 ```
 # A tibble: 6 x 3
-# Groups:   cyl [3]
-    cyl range name 
-  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
-1     4  21.4 min  
-2     4  33.9 max  
-3     6  17.8 min  
-4     6  21.4 max  
-5     8  10.4 min  
-6     8  19.2 max  
+# Groups:   origin [3]
+  origin range name 
+  &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;
+1 EWR      -25 min  
+2 EWR     1126 max  
+3 JFK      -43 min  
+4 JFK     1301 max  
+5 LGA      -33 min  
+6 LGA      911 max  
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across3-auto[
 
 ```r
-mtcars %&gt;%  
-    group_by(cyl) %&gt;%  
-    summarise(range=range(mpg))  
-mtcars %&gt;%  
-    group_by(cyl) %&gt;%  
-    summarise(range=range(mpg)) %&gt;%  
-    mutate(name=rep(c("min","max"), length(unique(cyl)))) %&gt;%  
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+    summarise(range=range(dep_delay))
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+    summarise(range=range(dep_delay)) %&gt;%
+    mutate(name=rep(c("min","max"), length(unique(origin)))) %&gt;%
 *   pivot_wider(names_from=name, values_from=range)
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across3-auto[
 
 ```
 # A tibble: 6 x 2
-# Groups:   cyl [3]
-    cyl range
-  &lt;dbl&gt; &lt;dbl&gt;
-1     4  21.4
-2     4  33.9
-3     6  17.8
-4     6  21.4
-5     8  10.4
-6     8  19.2
+# Groups:   origin [3]
+  origin range
+  &lt;chr&gt;  &lt;dbl&gt;
+1 EWR      -25
+2 EWR     1126
+3 JFK      -43
+4 JFK     1301
+5 LGA      -33
+6 LGA      911
 ```
 
 ```
 # A tibble: 3 x 3
-# Groups:   cyl [3]
-    cyl   min   max
-  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1     4  21.4  33.9
-2     6  17.8  21.4
-3     8  10.4  19.2
+# Groups:   origin [3]
+  origin   min   max
+  &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 EWR      -25  1126
+2 JFK      -43  1301
+3 LGA      -33   911
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across3-auto[
 
 ```r
-mtcars %&gt;%  
-    group_by(cyl) %&gt;%  
-    summarise(range=range(mpg))  
-mtcars %&gt;%  
-    group_by(cyl) %&gt;%  
-    summarise(range=range(mpg)) %&gt;%  
-    mutate(name=rep(c("min","max"), length(unique(cyl)))) %&gt;%  
-    pivot_wider(names_from=name, values_from=range)  
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+    summarise(range=range(dep_delay))
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+    summarise(range=range(dep_delay)) %&gt;%
+    mutate(name=rep(c("min","max"), length(unique(origin)))) %&gt;%
+    pivot_wider(names_from=name, values_from=range)
 # alternative
 
-*mtcars
+*flights
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across3-auto[
 
 ```
 # A tibble: 6 x 2
-# Groups:   cyl [3]
-    cyl range
-  &lt;dbl&gt; &lt;dbl&gt;
-1     4  21.4
-2     4  33.9
-3     6  17.8
-4     6  21.4
-5     8  10.4
-6     8  19.2
+# Groups:   origin [3]
+  origin range
+  &lt;chr&gt;  &lt;dbl&gt;
+1 EWR      -25
+2 EWR     1126
+3 JFK      -43
+4 JFK     1301
+5 LGA      -33
+6 LGA      911
 ```
 
 ```
 # A tibble: 3 x 3
-# Groups:   cyl [3]
-    cyl   min   max
-  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1     4  21.4  33.9
-2     6  17.8  21.4
-3     8  10.4  19.2
+# Groups:   origin [3]
+  origin   min   max
+  &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 EWR      -25  1126
+2 JFK      -43  1301
+3 LGA      -33   911
 ```
 
 ```
-                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
-Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
-Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
-Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
-Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
-Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
-Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
-Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
-Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
-Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
-Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
-Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
-Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
-Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
-Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
-Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
-Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
-Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
-Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
-AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
-Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
-Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
-Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
-Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
-Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
-Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
-Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
-Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
-Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
+# A tibble: 336,776 x 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across3-auto[
 
 ```r
-mtcars %&gt;%  
-    group_by(cyl) %&gt;%  
-    summarise(range=range(mpg))  
-mtcars %&gt;%  
-    group_by(cyl) %&gt;%  
-    summarise(range=range(mpg)) %&gt;%  
-    mutate(name=rep(c("min","max"), length(unique(cyl)))) %&gt;%  
-    pivot_wider(names_from=name, values_from=range)  
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+    summarise(range=range(dep_delay))
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+    summarise(range=range(dep_delay)) %&gt;%
+    mutate(name=rep(c("min","max"), length(unique(origin)))) %&gt;%
+    pivot_wider(names_from=name, values_from=range)
 # alternative
 
-mtcars %&gt;%  
-*   group_by(cyl)
+flights %&gt;%
+*   drop_na(dep_delay)
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across3-auto[
 
 ```
 # A tibble: 6 x 2
-# Groups:   cyl [3]
-    cyl range
-  &lt;dbl&gt; &lt;dbl&gt;
-1     4  21.4
-2     4  33.9
-3     6  17.8
-4     6  21.4
-5     8  10.4
-6     8  19.2
+# Groups:   origin [3]
+  origin range
+  &lt;chr&gt;  &lt;dbl&gt;
+1 EWR      -25
+2 EWR     1126
+3 JFK      -43
+4 JFK     1301
+5 LGA      -33
+6 LGA      911
 ```
 
 ```
 # A tibble: 3 x 3
-# Groups:   cyl [3]
-    cyl   min   max
-  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1     4  21.4  33.9
-2     6  17.8  21.4
-3     8  10.4  19.2
+# Groups:   origin [3]
+  origin   min   max
+  &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 EWR      -25  1126
+2 JFK      -43  1301
+3 LGA      -33   911
 ```
 
 ```
-# A tibble: 32 x 11
-# Groups:   cyl [3]
-     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
-   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1  21       6  160    110  3.9   2.62  16.5     0     1     4     4
- 2  21       6  160    110  3.9   2.88  17.0     0     1     4     4
- 3  22.8     4  108     93  3.85  2.32  18.6     1     1     4     1
- 4  21.4     6  258    110  3.08  3.22  19.4     1     0     3     1
- 5  18.7     8  360    175  3.15  3.44  17.0     0     0     3     2
- 6  18.1     6  225    105  2.76  3.46  20.2     1     0     3     1
- 7  14.3     8  360    245  3.21  3.57  15.8     0     0     3     4
- 8  24.4     4  147.    62  3.69  3.19  20       1     0     4     2
- 9  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2
-10  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4
-# … with 22 more rows
+# A tibble: 328,521 x 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 328,511 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across3-auto[
 
 ```r
-mtcars %&gt;%  
-    group_by(cyl) %&gt;%  
-    summarise(range=range(mpg))  
-mtcars %&gt;%  
-    group_by(cyl) %&gt;%  
-    summarise(range=range(mpg)) %&gt;%  
-    mutate(name=rep(c("min","max"), length(unique(cyl)))) %&gt;%  
-    pivot_wider(names_from=name, values_from=range)  
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+    summarise(range=range(dep_delay))
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+    summarise(range=range(dep_delay)) %&gt;%
+    mutate(name=rep(c("min","max"), length(unique(origin)))) %&gt;%
+    pivot_wider(names_from=name, values_from=range)
 # alternative
 
-mtcars %&gt;%  
-    group_by(cyl) %&gt;%  
-*   summarise(min=min(mpg), max=max(mpg))
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+*   group_by(origin)
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across3-auto[
 
 ```
 # A tibble: 6 x 2
-# Groups:   cyl [3]
-    cyl range
-  &lt;dbl&gt; &lt;dbl&gt;
-1     4  21.4
-2     4  33.9
-3     6  17.8
-4     6  21.4
-5     8  10.4
-6     8  19.2
+# Groups:   origin [3]
+  origin range
+  &lt;chr&gt;  &lt;dbl&gt;
+1 EWR      -25
+2 EWR     1126
+3 JFK      -43
+4 JFK     1301
+5 LGA      -33
+6 LGA      911
 ```
 
 ```
 # A tibble: 3 x 3
-# Groups:   cyl [3]
-    cyl   min   max
-  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1     4  21.4  33.9
-2     6  17.8  21.4
-3     8  10.4  19.2
+# Groups:   origin [3]
+  origin   min   max
+  &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 EWR      -25  1126
+2 JFK      -43  1301
+3 LGA      -33   911
 ```
 
 ```
-# A tibble: 3 x 3
-    cyl   min   max
-* &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1     4  21.4  33.9
-2     6  17.8  21.4
-3     8  10.4  19.2
+# A tibble: 328,521 x 19
+# Groups:   origin [3]
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 328,511 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
 ```
-]]
+]
+
 ---
-class: split-50
 count: false
  
 
- 
-.column[.content[
+.panel1-across3-auto[
 
 ```r
-mtcars %&gt;%  
-    group_by(cyl) %&gt;%  
-    summarise(range=range(mpg))  
-mtcars %&gt;%  
-    group_by(cyl) %&gt;%  
-    summarise(range=range(mpg)) %&gt;%  
-    mutate(name=rep(c("min","max"), length(unique(cyl)))) %&gt;%  
-    pivot_wider(names_from=name, values_from=range)  
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+    summarise(range=range(dep_delay))
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+    summarise(range=range(dep_delay)) %&gt;%
+    mutate(name=rep(c("min","max"), length(unique(origin)))) %&gt;%
+    pivot_wider(names_from=name, values_from=range)
 # alternative
 
-mtcars %&gt;%  
-    group_by(cyl) %&gt;%  
-    summarise(min=min(mpg), max=max(mpg))  
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+*   summarise(min=min(dep_delay), max=max(dep_delay))
+```
+]
+ 
+.panel2-across3-auto[
+
+```
+# A tibble: 6 x 2
+# Groups:   origin [3]
+  origin range
+  &lt;chr&gt;  &lt;dbl&gt;
+1 EWR      -25
+2 EWR     1126
+3 JFK      -43
+4 JFK     1301
+5 LGA      -33
+6 LGA      911
+```
+
+```
+# A tibble: 3 x 3
+# Groups:   origin [3]
+  origin   min   max
+  &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 EWR      -25  1126
+2 JFK      -43  1301
+3 LGA      -33   911
+```
+
+```
+# A tibble: 3 x 3
+  origin   min   max
+  &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 EWR      -25  1126
+2 JFK      -43  1301
+3 LGA      -33   911
+```
+]
+
+---
+count: false
+ 
+
+.panel1-across3-auto[
+
+```r
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+    summarise(range=range(dep_delay))
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+    summarise(range=range(dep_delay)) %&gt;%
+    mutate(name=rep(c("min","max"), length(unique(origin)))) %&gt;%
+    pivot_wider(names_from=name, values_from=range)
+# alternative
+
+flights %&gt;%
+    drop_na(dep_delay) %&gt;%
+    group_by(origin) %&gt;%
+    summarise(min=min(dep_delay), max=max(dep_delay))
 # May the second one much easier
 # But useful in longer output
 ```
-]]
-.column[.content[
+]
+ 
+.panel2-across3-auto[
 
 ```
 # A tibble: 6 x 2
-# Groups:   cyl [3]
-    cyl range
-  &lt;dbl&gt; &lt;dbl&gt;
-1     4  21.4
-2     4  33.9
-3     6  17.8
-4     6  21.4
-5     8  10.4
-6     8  19.2
+# Groups:   origin [3]
+  origin range
+  &lt;chr&gt;  &lt;dbl&gt;
+1 EWR      -25
+2 EWR     1126
+3 JFK      -43
+4 JFK     1301
+5 LGA      -33
+6 LGA      911
 ```
 
 ```
 # A tibble: 3 x 3
-# Groups:   cyl [3]
-    cyl   min   max
-  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1     4  21.4  33.9
-2     6  17.8  21.4
-3     8  10.4  19.2
+# Groups:   origin [3]
+  origin   min   max
+  &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 EWR      -25  1126
+2 JFK      -43  1301
+3 LGA      -33   911
 ```
 
 ```
 # A tibble: 3 x 3
-    cyl   min   max
-* &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1     4  21.4  33.9
-2     6  17.8  21.4
-3     8  10.4  19.2
+  origin   min   max
+  &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 EWR      -25  1126
+2 JFK      -43  1301
+3 LGA      -33   911
 ```
-]]
+]
+
+&lt;style&gt;
+.panel1-across3-auto {
+  color: black;
+  width: 51.3333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-across3-auto {
+  color: black;
+  width: 46.6666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-across3-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
 
 ---
 
 
 
 count: false
+ 
+
+.panel1-across4-auto[
 
 ```r
 *decile &lt;- seq(0, 1, 0.1)
 ```
+]
+ 
+.panel2-across4-auto[
+
+]
+
 ---
 count: false
+ 
+
+.panel1-across4-auto[
 
 ```r
-decile &lt;- seq(0, 1, 0.1)  
-*mtcars
+decile &lt;- seq(0, 1, 0.1)
+*flights
 ```
+]
+ 
+.panel2-across4-auto[
+
+```
+# A tibble: 336,776 x 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
+```
+]
+
 ---
 count: false
+ 
+
+.panel1-across4-auto[
 
 ```r
-decile &lt;- seq(0, 1, 0.1)  
-mtcars %&gt;%  
-* group_by(cyl)
+decile &lt;- seq(0, 1, 0.1)
+flights %&gt;%
+* drop_na(dep_delay)
 ```
+]
+ 
+.panel2-across4-auto[
+
+```
+# A tibble: 328,521 x 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 328,511 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
+```
+]
+
 ---
 count: false
+ 
+
+.panel1-across4-auto[
 
 ```r
-decile &lt;- seq(0, 1, 0.1)  
-mtcars %&gt;%  
-  group_by(cyl) %&gt;%  
-* summarise(deciles = quantile(mpg, decile))
+decile &lt;- seq(0, 1, 0.1)
+flights %&gt;%
+  drop_na(dep_delay) %&gt;%
+* group_by(origin)
 ```
+]
+ 
+.panel2-across4-auto[
+
+```
+# A tibble: 328,521 x 19
+# Groups:   origin [3]
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# … with 328,511 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
+```
+]
+
 ---
 count: false
+ 
+
+.panel1-across4-auto[
 
 ```r
-decile &lt;- seq(0, 1, 0.1)  
-mtcars %&gt;%  
-  group_by(cyl) %&gt;%  
-  summarise(deciles = quantile(mpg, decile)) %&gt;%  
-* mutate(name = rep(paste0("dec_", decile), length(unique(cyl))))
+decile &lt;- seq(0, 1, 0.1)
+flights %&gt;%
+  drop_na(dep_delay) %&gt;%
+  group_by(origin) %&gt;%
+* summarise(deciles = quantile(dep_delay, decile))
 ```
----
-count: false
-
-```r
-decile &lt;- seq(0, 1, 0.1)  
-mtcars %&gt;%  
-  group_by(cyl) %&gt;%  
-  summarise(deciles = quantile(mpg, decile)) %&gt;%  
-  mutate(name = rep(paste0("dec_", decile), length(unique(cyl)))) %&gt;%  
-* pivot_wider(names_from = name, values_from = deciles)
-```
-
-count: false
-
----
-count: false
-
-```
-                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
-Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
-Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
-Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
-Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
-Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
-Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
-Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
-Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
-Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
-Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
-Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
-Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
-Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
-Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
-Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
-Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
-Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
-Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
-AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
-Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
-Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
-Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
-Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
-Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
-Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
-Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
-Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
-Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
-```
----
-count: false
-
-```
-# A tibble: 32 x 11
-# Groups:   cyl [3]
-     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
-   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1  21       6  160    110  3.9   2.62  16.5     0     1     4     4
- 2  21       6  160    110  3.9   2.88  17.0     0     1     4     4
- 3  22.8     4  108     93  3.85  2.32  18.6     1     1     4     1
- 4  21.4     6  258    110  3.08  3.22  19.4     1     0     3     1
- 5  18.7     8  360    175  3.15  3.44  17.0     0     0     3     2
- 6  18.1     6  225    105  2.76  3.46  20.2     1     0     3     1
- 7  14.3     8  360    245  3.21  3.57  15.8     0     0     3     4
- 8  24.4     4  147.    62  3.69  3.19  20       1     0     4     2
- 9  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2
-10  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4
-# … with 22 more rows
-```
----
-count: false
+]
+ 
+.panel2-across4-auto[
 
 ```
 # A tibble: 33 x 2
-# Groups:   cyl [3]
-     cyl deciles
-   &lt;dbl&gt;   &lt;dbl&gt;
- 1     4    21.4
- 2     4    21.5
- 3     4    22.8
- 4     4    22.8
- 5     4    24.4
- 6     4    26  
- 7     4    27.3
- 8     4    30.4
- 9     4    30.4
-10     4    32.4
+# Groups:   origin [3]
+   origin deciles
+   &lt;chr&gt;    &lt;dbl&gt;
+ 1 EWR        -25
+ 2 EWR         -7
+ 3 EWR         -5
+ 4 EWR         -4
+ 5 EWR         -2
+ 6 EWR         -1
+ 7 EWR          2
+ 8 EWR          9
+ 9 EWR         23
+10 EWR         57
 # … with 23 more rows
 ```
+]
+
 ---
 count: false
+ 
+
+.panel1-across4-auto[
+
+```r
+decile &lt;- seq(0, 1, 0.1)
+flights %&gt;%
+  drop_na(dep_delay) %&gt;%
+  group_by(origin) %&gt;%
+  summarise(deciles = quantile(dep_delay, decile)) %&gt;%
+* mutate(name = rep(paste0("dec_", decile), length(unique(origin))))
+```
+]
+ 
+.panel2-across4-auto[
 
 ```
 # A tibble: 33 x 3
-# Groups:   cyl [3]
-     cyl deciles name   
-   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;  
- 1     4    21.4 dec_0  
- 2     4    21.5 dec_0.1
- 3     4    22.8 dec_0.2
- 4     4    22.8 dec_0.3
- 5     4    24.4 dec_0.4
- 6     4    26   dec_0.5
- 7     4    27.3 dec_0.6
- 8     4    30.4 dec_0.7
- 9     4    30.4 dec_0.8
-10     4    32.4 dec_0.9
+# Groups:   origin [3]
+   origin deciles name   
+   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;  
+ 1 EWR        -25 dec_0  
+ 2 EWR         -7 dec_0.1
+ 3 EWR         -5 dec_0.2
+ 4 EWR         -4 dec_0.3
+ 5 EWR         -2 dec_0.4
+ 6 EWR         -1 dec_0.5
+ 7 EWR          2 dec_0.6
+ 8 EWR          9 dec_0.7
+ 9 EWR         23 dec_0.8
+10 EWR         57 dec_0.9
 # … with 23 more rows
 ```
+]
+
 ---
 count: false
+ 
+
+.panel1-across4-auto[
+
+```r
+decile &lt;- seq(0, 1, 0.1)
+flights %&gt;%
+  drop_na(dep_delay) %&gt;%
+  group_by(origin) %&gt;%
+  summarise(deciles = quantile(dep_delay, decile)) %&gt;%
+  mutate(name = rep(paste0("dec_", decile), length(unique(origin)))) %&gt;%
+* pivot_wider(names_from = name, values_from = deciles)
+```
+]
+ 
+.panel2-across4-auto[
 
 ```
 # A tibble: 3 x 12
-# Groups:   cyl [3]
-    cyl dec_0 dec_0.1 dec_0.2 dec_0.3 dec_0.4 dec_0.5 dec_0.6 dec_0.7 dec_0.8
-  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1     4  21.4    21.5    22.8    22.8    24.4    26      27.3    30.4    30.4
-2     6  17.8    18.0    18.3    19.0    19.4    19.7    20.5    21      21  
-3     8  10.4    11.3    13.9    14.7    15.0    15.2    15.4    15.9    16.8
+# Groups:   origin [3]
+  origin dec_0 dec_0.1 dec_0.2 dec_0.3 dec_0.4 dec_0.5 dec_0.6 dec_0.7 dec_0.8
+  &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 EWR      -25      -7      -5      -4      -2      -1       2       9      23
+2 JFK      -43      -7      -5      -4      -3      -1       0       5      17
+3 LGA      -33      -9      -7      -5      -4      -3      -1       2      14
 # … with 2 more variables: dec_0.9 &lt;dbl&gt;, dec_1 &lt;dbl&gt;
 ```
-
----
-
-class: inverse,middle,center 
-
-# Row-wise
-
----
-
-
-Let's have a look at "rowwise" vignette
-
-
-
----
-
-
-
-
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-*example
-```
-]]
-.column[.content[
-
-```
-# A tibble: 4 x 2
-      x y    
-  &lt;int&gt; &lt;chr&gt;
-1     1 a    
-2     2 b    
-3     3 c    
-4     4 d    
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-example  
-*slide(example$x, ~.x)
-```
-]]
-.column[.content[
-
-```
-# A tibble: 4 x 2
-      x y    
-  &lt;int&gt; &lt;chr&gt;
-1     1 a    
-2     2 b    
-3     3 c    
-4     4 d    
-```
-
-```
-[[1]]
-[1] 1
-
-[[2]]
-[1] 2
-
-[[3]]
-[1] 3
-
-[[4]]
-[1] 4
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-example  
-slide(example$x, ~.x)  
-*slide(example$x, ~.x,.before=1)
-```
-]]
-.column[.content[
-
-```
-# A tibble: 4 x 2
-      x y    
-  &lt;int&gt; &lt;chr&gt;
-1     1 a    
-2     2 b    
-3     3 c    
-4     4 d    
-```
-
-```
-[[1]]
-[1] 1
-
-[[2]]
-[1] 2
-
-[[3]]
-[1] 3
-
-[[4]]
-[1] 4
-```
-
-```
-[[1]]
-[1] 1
-
-[[2]]
-[1] 1 2
-
-[[3]]
-[1] 2 3
-
-[[4]]
-[1] 3 4
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-example  
-slide(example$x, ~.x)  
-slide(example$x, ~.x,.before=1)  
-*slide(example$x, ~.x, .before=1,.after=1)
-```
-]]
-.column[.content[
-
-```
-# A tibble: 4 x 2
-      x y    
-  &lt;int&gt; &lt;chr&gt;
-1     1 a    
-2     2 b    
-3     3 c    
-4     4 d    
-```
-
-```
-[[1]]
-[1] 1
-
-[[2]]
-[1] 2
-
-[[3]]
-[1] 3
-
-[[4]]
-[1] 4
-```
-
-```
-[[1]]
-[1] 1
-
-[[2]]
-[1] 1 2
-
-[[3]]
-[1] 2 3
-
-[[4]]
-[1] 3 4
-```
-
-```
-[[1]]
-[1] 1 2
-
-[[2]]
-[1] 1 2 3
-
-[[3]]
-[1] 2 3 4
-
-[[4]]
-[1] 3 4
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-example  
-slide(example$x, ~.x)  
-slide(example$x, ~.x,.before=1)  
-slide(example$x, ~.x, .before=1,.after=1)  
-*slide(example, ~.x, .before=1,.after=1,.complete=TRUE)
-```
-]]
-.column[.content[
-
-```
-# A tibble: 4 x 2
-      x y    
-  &lt;int&gt; &lt;chr&gt;
-1     1 a    
-2     2 b    
-3     3 c    
-4     4 d    
-```
-
-```
-[[1]]
-[1] 1
-
-[[2]]
-[1] 2
-
-[[3]]
-[1] 3
-
-[[4]]
-[1] 4
-```
-
-```
-[[1]]
-[1] 1
-
-[[2]]
-[1] 1 2
-
-[[3]]
-[1] 2 3
-
-[[4]]
-[1] 3 4
-```
-
-```
-[[1]]
-[1] 1 2
-
-[[2]]
-[1] 1 2 3
-
-[[3]]
-[1] 2 3 4
-
-[[4]]
-[1] 3 4
-```
-
-```
-[[1]]
-NULL
-
-[[2]]
-# A tibble: 3 x 2
-      x y    
-  &lt;int&gt; &lt;chr&gt;
-1     1 a    
-2     2 b    
-3     3 c    
-
-[[3]]
-# A tibble: 3 x 2
-      x y    
-  &lt;int&gt; &lt;chr&gt;
-1     2 b    
-2     3 c    
-3     4 d    
-
-[[4]]
-NULL
-```
-]]
----
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```r
-example  
-slide(example$x, ~.x)  
-slide(example$x, ~.x,.before=1)  
-slide(example$x, ~.x, .before=1,.after=1)  
-slide(example, ~.x, .before=1,.after=1,.complete=TRUE)  
-```
-]]
-.column[.content[
-
-```
-# A tibble: 4 x 2
-      x y    
-  &lt;int&gt; &lt;chr&gt;
-1     1 a    
-2     2 b    
-3     3 c    
-4     4 d    
-```
-
-```
-[[1]]
-[1] 1
-
-[[2]]
-[1] 2
-
-[[3]]
-[1] 3
-
-[[4]]
-[1] 4
-```
-
-```
-[[1]]
-[1] 1
-
-[[2]]
-[1] 1 2
-
-[[3]]
-[1] 2 3
-
-[[4]]
-[1] 3 4
-```
-
-```
-[[1]]
-[1] 1 2
-
-[[2]]
-[1] 1 2 3
-
-[[3]]
-[1] 2 3 4
-
-[[4]]
-[1] 3 4
-```
-
-```
-[[1]]
-NULL
-
-[[2]]
-# A tibble: 3 x 2
-      x y    
-  &lt;int&gt; &lt;chr&gt;
-1     1 a    
-2     2 b    
-3     3 c    
-
-[[3]]
-# A tibble: 3 x 2
-      x y    
-  &lt;int&gt; &lt;chr&gt;
-1     2 b    
-2     3 c    
-3     4 d    
-
-[[4]]
-NULL
-```
-]]
-
-
-
-
-
+]
+
+&lt;style&gt;
+.panel1-across4-auto {
+  color: black;
+  width: 51.3333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-across4-auto {
+  color: black;
+  width: 46.6666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-across4-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
 
 
 

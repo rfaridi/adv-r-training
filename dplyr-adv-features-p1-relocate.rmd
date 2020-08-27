@@ -1,0 +1,42 @@
+class: inverse,middle,center 
+ 
+# `relocate()`
+
+---
+
+The function `relocate()` changes the position of variables in the data set
+
+---
+
+```{r relocate, include = FALSE}
+flights %>% 
+    relocate(carrier)  %>% 
+    head(2)
+flights %>% 
+    relocate(carrier, .after=day) %>% 
+    head(2)
+flights %>% 
+    relocate(carrier, .before=air_time) %>% 
+    head(2)
+flights %>% 
+    relocate(carrier, .after =last_col()) %>% 
+    head(2)
+```
+
+`r chunk_reveal("relocate")`
+
+---
+
+```{r relocate2, include = FALSE}
+flights %>% 
+    relocate(is.numeric, .after =last_col()) %>% 
+    head(2)
+flights %>% 
+    relocate(is.character, .after = is.numeric) %>% 
+    head(2)
+```
+
+`r chunk_reveal("relocate2")`
+
+
+

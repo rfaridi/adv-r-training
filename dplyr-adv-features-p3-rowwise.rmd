@@ -1,0 +1,43 @@
+---
+
+class: inverse,middle,center 
+
+# Row-wise
+
+---
+
+
+Let's have a look at "rowwise" vignette
+
+```{r df, include=F}
+example <- tibble(
+  x = 1:4,
+  y = letters[1:4]
+)
+```
+
+---
+
+
+```{r rowwise, include=F}
+example
+slide(example$x, ~.x)
+slide(example$x, ~.x,.before=1)
+slide(example$x, ~.x, .before=1,.after=1)
+slide(example, ~.x, .before=1,.after=1,.complete=TRUE)
+
+```
+
+`r chunk_reveal("rowwise")`
+
+
+
+
+
+
+
+
+
+
+
+

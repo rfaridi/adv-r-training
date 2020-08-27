@@ -1,16 +1,24 @@
+
+pre   {
+   background: #F5F5F5;
+   color: black;
+}
+
 pre>.remark-code>.remark-code-line{
   font-family:'Source Code Pro', 'Lucida Console', Monaco, monospace;
   font-size:10pt;
 }
 
 code.r.hljs.remark-code {
-    background:	lightgray; 
+    background:	#E8E8E8; 
     color: black;
+    font-size: 10pt;
 }
 
 .r.hljs.remark-code>.remark-code-line {
     font-family:'Source Code Pro','Lucida Console', Monaco, monospace;
-    font-size:10pt;
+    font-size: 10pt;
+    font-weight: 600;
 }
 
 
@@ -71,11 +79,6 @@ code.r.hljs.remark-code {
 
 /*background: #e1fec;*/
 
-pre   {
-   background: #F5F5F5;
-   color: black;
-  
-}
 
 .remark-slide-content h2 {
   margin: 0px 0px 10px 0px;
