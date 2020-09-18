@@ -124,3 +124,26 @@ flights %>%
   pivot_wider(names_from = name, values_from = deciles)
 
 
+
+vec <- exams$student1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
